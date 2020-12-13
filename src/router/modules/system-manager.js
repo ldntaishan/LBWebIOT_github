@@ -17,11 +17,11 @@ const systemManagerRouter = {
       component: () => import('@/views/system-manager/user-manager'),
       name: 'userManagement',
       meta: { title: '用户管理' }
-      
+
     },
     {
       path: 'dynamic-table',
-      component: () => import('@/views/system-manager/dynamic-table/index'),
+      component: () => import('@/views/system-manager/equipment-manager'),
       name: 'DynamicTable',
       meta: { title: '设备(风塔)管理' }
     },

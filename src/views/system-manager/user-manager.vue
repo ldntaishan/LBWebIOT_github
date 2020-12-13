@@ -190,7 +190,6 @@
 <script>
 import {
   seAllUserList,
-  fetchPv,
   createUser,
   updateArticle,
   userDeleteObj
@@ -325,7 +324,7 @@ export default {
     },
     handleModifyStatus(row, status) {
       this.$message({
-        message: '操作Success',
+        message: '操作成功',
         type: 'success'
       })
       row.status = status
@@ -444,12 +443,6 @@ export default {
         })
       })
       this.getList()
-    },
-    handleFetchPv(pv) {
-      fetchPv(pv).then(response => {
-        this.pvData = response.data.pvData
-        this.dialogPvVisible = true
-      })
     },
     handleDownload() {
       this.downloadLoading = true

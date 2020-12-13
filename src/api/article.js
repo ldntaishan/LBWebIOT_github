@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
-const serverBaseURL = 'http://localhost:8080/LBServerIOT_war_exploded'// 我的笔记本环境
-// const serverBaseURL = "http://localhost:8080/LBServerIOT_github_war";//我的台式机环境
+// const serverBaseURL = 'http://localhost:8080/LBServerIOT_war_exploded'// 我的笔记本环境
+const serverBaseURL = "http://localhost:8080/LBServerIOT_github_war_exploded/";//我的台式机环境
 // const serverBaseURL = "http://39.106.55.120:8080";//线上服务器环境
 
 export function fetchList(query) {
@@ -51,13 +51,6 @@ export function fetchArticle(id) {
   })
 }
 
-export function fetchPv(pv) {
-  return request({
-    url: '/vue-element-admin/article/pv',
-    method: 'get',
-    params: { pv }
-  })
-}
 
 export function createArticle(data) {
   return request({
@@ -74,3 +67,32 @@ export function updateArticle(data) {
     data
   })
 }
+  //--设备管理 片段-----------
+
+//设备查询
+export function seEquipmentList(query) {
+    return request({
+      url: serverBaseURL + '/eqmt/f_eqmtlist',
+      method: 'get',
+      params: { query }
+    })
+}
+//创建设备
+export function createEquipment(organization, equipmentName, equipmentType, equipmentNO, sysState) {
+    return request({
+      url: serverBaseURL + '/eqmt/crt_eqmt',
+      method: 'get',
+      params: { organization, equipmentName, equipmentType, equipmentNO, sysState }
+    })
+}
+//删除设备
+export function userEquipment(equipmentId) {
+  return request({
+    url: serverBaseURL + '/eqmt/del_eqmt',
+    method: 'get',
+    params: { equipmentId }
+  })
+}
+
+  //-------------------------
+
