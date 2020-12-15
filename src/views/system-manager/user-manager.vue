@@ -184,10 +184,25 @@
         <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="提示"
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center
+    >
+      <span>需要注意的是内容是默认不居中的</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="doDelete">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
+import { MessageBox, Message } from 'element-ui'
 import {
   seAllUserList,
   createUser,
@@ -289,6 +304,7 @@ export default {
         create: '创建'
       },
       dialogPvVisible: false,
+      centerDialogVisible: false,
       pvData: [],
       rules: {
         // type: [{required: true,message: 'type is required',trigger: 'change'}],
@@ -388,16 +404,22 @@ export default {
             this.temp.userTel,
             this.temp.userRole,
             this.temp.userPassWord
-          ).then(() => {
+          ).then(response => {
             this.list.unshift(this.temp)
+            this.updateTotal(1)
             this.dialogFormVisible = false
-            this.$notify({
-              title: 'Success',
-              message: 'Created Successfully',
+            Message({
+              message: response.RequestMessage,
               type: 'success',
-              duration: 2000
+              duration: 5 * 1000
             })
-            this.getList()
+            // this.$notify({
+            //   title: 'Success',
+            //   message: response.RequestMessage,
+            //   type: 'success',
+            //   duration: 2000
+            // })
+            // this.getList()
           })
         }
       })
@@ -435,6 +457,7 @@ export default {
 
       userDeleteObj(this.temp.userId).then(() => {
         this.list.splice(index, 1)
+        this.updateTotal(-1)
         this.$notify({
           title: 'Success',
           message: 'Delete Successfully',
@@ -442,7 +465,21 @@ export default {
           duration: 2000
         })
       })
-      this.getList()
+      // this.centerDialogVisible = true
+      // this.centerDialogVisible = false
+    },
+    doDelete() {
+
+      // this.getList()
+    },
+    updateTotal(change) {
+      // const oldPage=Math.ceil(this.total/this.listQuery.limit)
+      this.total = this.total + change
+      const newPage = Math.ceil(this.total / this.listQuery.limit)
+      if (this.listQuery.page > newPage) {
+        this.listQuery.page = newPage
+        this.getList()
+      }
     },
     handleDownload() {
       this.downloadLoading = true
