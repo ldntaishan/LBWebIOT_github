@@ -10,6 +10,9 @@ import Layout from '@/layout'
 import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import systemManagerRouter from './modules/system-manager'
+import systemOperationRouter from './modules/system-operation'
+import systemSetRouter from './modules/system-set'
+
 import nestedRouter from './modules/nested'
 
 /**
@@ -79,7 +82,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '在线监测管理', icon: 'chart', affix: true }
+        meta: { title: '在线监测', icon: 'chart', affix: true }
       }
     ]
   },
@@ -172,24 +175,26 @@ export const asyncRoutes = [
   // },
 
 
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: '运营维护管理', icon: 'bug', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/icon',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/icons/index'),
+  //       name: 'Icons',
+  //       meta: { title: '运营维护管理', icon: 'bug', noCache: true }
+  //     }
+  //   ]
+  // },
 
   /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,
   // chartsRouter,
   // nestedRouter,
+  systemOperationRouter,
   systemManagerRouter,
+  systemSetRouter,
 
   // {
   //   path: '/example',

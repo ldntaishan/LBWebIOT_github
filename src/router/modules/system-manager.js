@@ -8,7 +8,7 @@ const systemManagerRouter = {
   redirect: '/system-manager/user-manager',
   name: 'system-manager',
   meta: {
-    title: '系统信息管理',
+    title: '基础信息',
     icon: 'peoples'
   },
   children: [
@@ -16,20 +16,20 @@ const systemManagerRouter = {
       path: 'user-manager',
       component: () => import('@/views/system-manager/user-manager'),
       name: 'userManagement',
-      meta: { title: '用户管理' }
+      meta: { title: '---用户管理' }
 
     },
     {
       path: 'dynamic-table',
       component: () => import('@/views/system-manager/equipment-manager'),
       name: 'DynamicTable',
-      meta: { title: '设备(风塔)管理' }
+      meta: { title: '---风塔管理' }
     },
     {
       path: 'drag-table',
-      component: () => import('@/views/system-manager/drag-table'),
+      component: () => import('@/views/system-manager/sensor-manager'),
       name: 'DragTable',
-      meta: { title: '螺栓监控传感器管理' }
+      meta: { title: '---螺栓管理' }
     },
     // {
     //   path: 'inline-edit-table',

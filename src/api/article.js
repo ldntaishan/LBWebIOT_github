@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
 // const serverBaseURL = 'http://localhost:8080/LBServerIOT_war_exploded'// 我的笔记本环境
-// const serverBaseURL = "http://localhost:8080/LBServerIOT_github_war_exploded/";//我的台式机环境
-const serverBaseURL = "http://39.106.55.120:8080";//线上服务器环境
+const serverBaseURL = "http://localhost:8080/LBServerIOT_github_war_exploded/";//我的台式机环境
+// const serverBaseURL = "http://39.106.55.120:8080";//线上服务器环境
 
 export function fetchList(query) {
   return request({
@@ -91,6 +91,14 @@ export function userEquipment(equipmentId) {
     url: serverBaseURL + '/eqmt/del_eqmt',
     method: 'get',
     params: { equipmentId }
+  })
+}
+//--传感器管理 片段-----------
+export function seSensorList(query) {
+  return request({
+    url: serverBaseURL + '/ss/f_sslist',
+    method: 'get',
+    params: { query }
   })
 }
 
