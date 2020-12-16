@@ -82,7 +82,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '在线监测', icon: 'chart', affix: true }
+        meta: { title: '在线监测', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -193,6 +193,19 @@ export const asyncRoutes = [
   // chartsRouter,
   // nestedRouter,
   systemOperationRouter,
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/statistics',
+    children: [
+      {
+        path: 'statistics',
+        component: () => import('@/views/dashboard/index'),
+        name: 'statistics',
+        meta: { title: '数据统计', icon: 'chart', affix: true }
+      }
+    ]
+  },
   systemManagerRouter,
   systemSetRouter,
 

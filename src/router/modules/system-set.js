@@ -9,7 +9,7 @@ const systemSetRouter = {
   name: 'system-value-set',
   meta: {
     title: '系统设定',
-    icon: 'peoples'
+    icon: 'international'
   },
   children: [
     {

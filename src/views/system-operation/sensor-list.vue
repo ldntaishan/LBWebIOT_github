@@ -17,7 +17,7 @@
       </el-checkbox>
     </div>
 
-    <el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%;" @sort-change="sortChange">
+    <el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%;" >
 
       <el-table-column label="所属风塔" min-width="150px" align="center">
         <template slot-scope="{row}">
@@ -25,57 +25,57 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="传感器描述" min-width="100px" align="center">
+      <el-table-column label="传感器描述" min-width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.sensorDescription }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="型号" min-width="150px" align="center">
+      <el-table-column label="型号" min-width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.sensorType }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="设备编码" min-width="120px">
+      <el-table-column label="设备编码" min-width="100px">
         <template slot-scope="{row}">
           <span >{{ row.devNo }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="自定义阈值" min-width="100px" align="center">
+      <el-table-column label="自定阈值" min-width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.warningValue }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="系统默认阈值" min-width="100px" align="center">
+      <el-table-column label="默认阈值" min-width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.warningValue }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="实时值" min-width="100px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.nowTimeValue }}</span>
-        </template>
-      </el-table-column>
+      <!--      <el-table-column label="实时值" min-width="150px" align="center">-->
+      <!--        <template slot-scope="{row}">-->
+      <!--          <span>{{ row.nowTimeValue }}</span>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
 
-      <el-table-column label="绝对值" min-width="100px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.absoluteValue }}</span>
-        </template>
-      </el-table-column>
+      <!--      <el-table-column label="绝对值" min-width="150px" align="center">-->
+      <!--        <template slot-scope="{row}">-->
+      <!--          <span>{{ row.absoluteValue }}</span>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
 
-      <el-table-column label="上传时间" min-width="150px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.uploadTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
+      <!--      <el-table-column label="上传时间" min-width="150px" align="center">-->
+      <!--        <template slot-scope="{row}">-->
+      <!--          <span>{{ row.uploadTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
 
-      <el-table-column label="系统状态" min-width="150px" align="center">
+      <el-table-column label="系统状态" min-width="100px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.sysState }}</span>
+          <span>{{ row.status }}</span>
         </template>
       </el-table-column>
 
@@ -85,16 +85,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
-          <el-button type="success" size="mini" @click="handleUpdate(row)">
-            查看
+<!--          <el-button type="success" size="mini" @click="handleUpdate(row)">-->
+<!--            重置-->
+<!--          </el-button>-->
+          <el-button v-if="row.status!='1'" size="mini" type="success" @click="handleModifyStatus(row,'1')">
+            1
           </el-button>
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            编辑
+          <el-button v-if="row.status!='2'" size="mini" @click="handleModifyStatus(row,'2')">
+            2
           </el-button>
-          <el-button v-if="row.userState!='2'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            删除
+          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+            Delete
           </el-button>
         </template>
       </el-table-column>
@@ -103,23 +106,36 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
 
-        <el-form-item label="所属风场" prop="organization">
-          <el-input v-model="temp.organization" placeholder="请输入所属风场名称" />
+        <el-form-item label="所属风塔" prop="organization" >
+          <el-input v-model="temp.equipmentId" placeholder="请输入所属风场名称" />
         </el-form-item>
 
-        <el-form-item label="设备名称" prop="equipmentName">
-          <el-input v-model="temp.equipmentName" />
+        <el-form-item label="传感器描述" prop="equipmentName" >
+          <el-input v-model="temp.sensorDescription" />
         </el-form-item>
 
-        <el-form-item label="设备型号" prop="equipmentType">
-          <el-input v-model="temp.equipmentType" />
+        <el-form-item label="传感器型号" prop="equipmentType">
+          <el-input v-model="temp.sensorType" />
         </el-form-item>
 
-        <el-form-item label="设备编号" prop="equipmentNO">
-          <el-input v-model="temp.equipmentNO" />
+        <el-form-item label="传感器唯一码" prop="equipmentNO">
+          <el-input v-model="temp.devNo" />
         </el-form-item>
+
+        <el-form-item label="自定松动值" prop="organization">
+          <el-input v-model="temp.warningValue" placeholder="请输入所属风场名称" />
+        </el-form-item>
+
+        <!--        <el-form-item label="统一松动值" prop="equipmentName">-->
+        <!--          <el-input v-model="temp.equipmentName" />-->
+        <!--        </el-form-item>-->
+
+        <el-form-item label="系统状态" prop="equipmentType">
+          <el-input v-model="temp.sysState" />
+        </el-form-item>
+
 
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -147,7 +163,7 @@
 <script>
     import {
         seSensorList,
-        createEquipment,
+        createSensor,
         updateArticle,
         userEquipment
     } from '@/api/article'
@@ -225,6 +241,7 @@
                     sensorDescription:'',
                     sensorType:'',
                     devNo:'',
+                    equipmentId:'',
                     equipmentName:'',
                     warningValue:'',
                     allWarningId:'',
@@ -232,7 +249,8 @@
                     absoluteValue:'',
                     uploadTime:'',
                     sysState:'',
-                    createdate:''
+                    createdate:'',
+                    status: '1'
                 },
                 dialogFormVisible: false,
                 dialogStatus: '',
@@ -304,6 +322,7 @@
                     sensorDescription:'',
                     sensorType:'',
                     devNo:'',
+                    equipmentId:'',
                     equipmentName:'',
                     warningValue:'',
                     allWarningId:'',
@@ -311,7 +330,8 @@
                     absoluteValue:'',
                     uploadTime:'',
                     sysState:'',
-                    createdate:''
+                    createdate:'',
+                    status: '1'
 
                 }
             },
@@ -328,11 +348,12 @@
                     if (valid) {
                         // this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
                         // this.temp.author = 'vue-element-admin'
-                        createEquipment(
-                            this.temp.organization,
-                            this.temp.equipmentName,
-                            this.temp.equipmentType,
-                            this.temp.equipmentNO,
+                        createSensor(
+                            this.temp.equipmentId,
+                            this.temp.sensorDescription,
+                            this.temp.sensorType,
+                            this.temp.devNo,
+                            this.temp.warningValue,
                             this.temp.sysState
                         ).then(() => {
                             this.list.unshift(this.temp)

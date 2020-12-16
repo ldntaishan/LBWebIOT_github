@@ -9,7 +9,7 @@ const systemManagerRouter = {
   name: 'system-manager',
   meta: {
     title: '基础信息',
-    icon: 'peoples'
+    icon: 'form'
   },
   children: [
     {

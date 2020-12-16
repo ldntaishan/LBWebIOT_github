@@ -25,31 +25,31 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="传感器描述" min-width="100px" align="center">
+      <el-table-column label="传感器描述" min-width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.sensorDescription }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="型号" min-width="150px" align="center">
+      <el-table-column label="型号" min-width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.sensorType }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="设备编码" min-width="120px">
+      <el-table-column label="设备编码" min-width="100px">
         <template slot-scope="{row}">
           <span >{{ row.devNo }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="自定义阈值" min-width="150px" align="center">
+      <el-table-column label="自定阈值" min-width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.warningValue }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="系统默认阈值" min-width="150px" align="center">
+      <el-table-column label="默认阈值" min-width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.warningValue }}</span>
         </template>
@@ -73,7 +73,7 @@
 <!--        </template>-->
 <!--      </el-table-column>-->
 
-      <el-table-column label="系统状态" min-width="150px" align="center">
+      <el-table-column label="系统状态" min-width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.sysState }}</span>
         </template>
@@ -103,23 +103,36 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
 
-        <el-form-item label="所属风场" prop="organization">
-          <el-input v-model="temp.organization" placeholder="请输入所属风场名称" />
+        <el-form-item label="所属风塔" prop="organization" >
+          <el-input v-model="temp.equipmentId" placeholder="请输入所属风场名称" />
         </el-form-item>
 
-        <el-form-item label="设备名称" prop="equipmentName">
-          <el-input v-model="temp.equipmentName" />
+        <el-form-item label="传感器描述" prop="equipmentName" >
+          <el-input v-model="temp.sensorDescription" />
         </el-form-item>
 
-        <el-form-item label="设备型号" prop="equipmentType">
-          <el-input v-model="temp.equipmentType" />
+        <el-form-item label="传感器型号" prop="equipmentType">
+          <el-input v-model="temp.sensorType" />
         </el-form-item>
 
-        <el-form-item label="设备编号" prop="equipmentNO">
-          <el-input v-model="temp.equipmentNO" />
+        <el-form-item label="传感器唯一码" prop="equipmentNO">
+          <el-input v-model="temp.devNo" />
         </el-form-item>
+
+        <el-form-item label="自定松动值" prop="organization">
+          <el-input v-model="temp.warningValue" placeholder="请输入所属风场名称" />
+        </el-form-item>
+
+<!--        <el-form-item label="统一松动值" prop="equipmentName">-->
+<!--          <el-input v-model="temp.equipmentName" />-->
+<!--        </el-form-item>-->
+
+        <el-form-item label="系统状态" prop="equipmentType">
+          <el-input v-model="temp.sysState" />
+        </el-form-item>
+
 
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -147,7 +160,7 @@
 <script>
     import {
         seSensorList,
-        createEquipment,
+        createSensor,
         updateArticle,
         userEquipment
     } from '@/api/article'
@@ -225,6 +238,7 @@
                     sensorDescription:'',
                     sensorType:'',
                     devNo:'',
+                    equipmentId:'',
                     equipmentName:'',
                     warningValue:'',
                     allWarningId:'',
@@ -304,6 +318,7 @@
                     sensorDescription:'',
                     sensorType:'',
                     devNo:'',
+                    equipmentId:'',
                     equipmentName:'',
                     warningValue:'',
                     allWarningId:'',
@@ -328,11 +343,12 @@
                     if (valid) {
                         // this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
                         // this.temp.author = 'vue-element-admin'
-                        createEquipment(
-                            this.temp.organization,
-                            this.temp.equipmentName,
-                            this.temp.equipmentType,
-                            this.temp.equipmentNO,
+                        createSensor(
+                            this.temp.equipmentId,
+                            this.temp.sensorDescription,
+                            this.temp.sensorType,
+                            this.temp.devNo,
+                            this.temp.warningValue,
                             this.temp.sysState
                         ).then(() => {
                             this.list.unshift(this.temp)
