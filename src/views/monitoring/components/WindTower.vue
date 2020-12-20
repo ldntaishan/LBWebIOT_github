@@ -1,8 +1,8 @@
 <template>
-  <el-row :gutter="40" class="wind-tower">
-    <el-col v-for="(o, index) in lineChartData" :key="o" :span="6">
+  <el-row :gutter="30" class="wind-tower">
+    <el-col v-for="(o, index) in lineChartData" :key="o" :span="4">
       <el-card :body-style="{ padding: '0px' }">
-        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+        <img align="center" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" alt="Cinque Terre" class="img-thumbnail">
         <div style="padding: 14px;">
           <span>好吃的汉堡</span>
           <div class="bottom clearfix">

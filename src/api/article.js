@@ -20,6 +20,8 @@ export function seAllUserList(query) {
   })
 }
 
+
+
 export function createUser(userName, userNickName, userEmail, userTel, userRole, userPassWord) {
   return request({
     url: serverBaseURL + '/app/userSignin',
@@ -94,11 +96,19 @@ export function userEquipment(equipmentId) {
   })
 }
 //--传感器管理 片段-----------
-export function seSensorList(query) {
+export function list_monitoring(query) {
   return request({
-    url: serverBaseURL + '/ss/f_sslist',
+    url: serverBaseURL + '/ss/list_monitoring',
     method: 'get',
     params: { query }
+  })
+}
+
+export function update_useState(sensorId,useState) {
+  return request({
+    url: serverBaseURL + '/ss/update_useState',
+    method: 'get',
+    params: { sensorId,useState}
   })
 }
 
@@ -111,4 +121,3 @@ export function createSensor(equipmentId,sensorDescription,sensorType,devNo,warn
 }
 
   //-------------------------
-
