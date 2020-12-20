@@ -119,5 +119,11 @@ export function createSensor(equipmentId,sensorDescription,sensorType,devNo,warn
     params: { equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState }
   })
 }
-
+export function index_sensor_number() {
+  return request({
+    url: serverBaseURL + '/ss/index_sensor_number',
+    // url: serverBaseURL + '/app/t5',//随机数访问接口
+    method: 'get'
+  })
+}
   //-------------------------
