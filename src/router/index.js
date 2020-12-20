@@ -76,12 +76,12 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/monitoring',
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
+        path: 'monitoring',
+        component: () => import('@/views/monitoring/index'),
+        name: 'Monitoring',
         meta: { title: '在线监测', icon: 'dashboard', affix: true }
       }
     ]
@@ -174,7 +174,6 @@ export const asyncRoutes = [
   //   ]
   // },
 
-
   // {
   //   path: '/icon',
   //   component: Layout,
@@ -194,9 +193,9 @@ export const asyncRoutes = [
   // nestedRouter,
   systemOperationRouter,
   {
-    path: '/',
+    path: '/s',
     component: Layout,
-    redirect: '/statistics',
+    redirect: '/s/statistics',
     children: [
       {
         path: 'statistics',
