@@ -43,13 +43,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="自定阈值" min-width="100px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.warningValue }}</span>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="自定阈值" min-width="100px" align="center">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span>{{ row.warningValue }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
 
-      <el-table-column label="默认阈值" min-width="100px" align="center">
+      <el-table-column label="报警阈值" min-width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.warningValue }}</span>
         </template>
@@ -73,11 +73,11 @@
 <!--        </template>-->
 <!--      </el-table-column>-->
 
-      <el-table-column label="系统状态" min-width="100px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.sysState }}</span>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="系统状态" min-width="100px" align="center">-->
+<!--        <template slot-scope="{row}">-->
+<!--          <span>{{ row.sysState }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
 
       <el-table-column label="创建时间" min-width="150px" align="center">
         <template slot-scope="{row}">
@@ -121,7 +121,7 @@
           <el-input v-model="temp.devNo" />
         </el-form-item>
 
-        <el-form-item label="自定松动值" prop="organization">
+        <el-form-item label="报警阈值" prop="organization">
           <el-input v-model="temp.warningValue" placeholder="请输入所属风场名称" />
         </el-form-item>
 
@@ -129,9 +129,9 @@
 <!--          <el-input v-model="temp.equipmentName" />-->
 <!--        </el-form-item>-->
 
-        <el-form-item label="系统状态" prop="equipmentType">
-          <el-input v-model="temp.sysState" />
-        </el-form-item>
+<!--        <el-form-item label="系统状态" prop="equipmentType">-->
+<!--          <el-input v-model="temp.sysState" />-->
+<!--        </el-form-item>-->
 
 
       </el-form>

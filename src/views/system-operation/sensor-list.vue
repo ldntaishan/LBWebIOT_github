@@ -83,11 +83,11 @@
           <!--          <el-button type="success" size="mini" @click="handleUpdate(row)">-->
           <!--            重置-->
           <!--          </el-button>-->
-          <el-button v-if="row.useState!='disable'" size="mini" type="success" @click="handleModifyStatus(row,'disable')">
+          <el-button v-if="row.useState!='disable'" size="mini" type="danger" @click="handleModifyStatus(row,'disable')">
             停用
           </el-button>
-          <el-button v-if="row.useState!='enable'" size="mini" @click="handleModifyStatus(row,'enable')">
-            在用
+          <el-button v-if="row.useState!='enable'" size="mini" type="success" @click="handleModifyStatus(row,'enable')">
+            启用
           </el-button>
           <!-- <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
@@ -184,12 +184,12 @@
   const useStatusTypeOptions = [{
       useState: 'disable',
       type: 'info',
-      name: '停用'
+      name: '已停止'
     },
     {
       useState: 'enable',
       type: 'primary',
-      name: '启用'
+      name: '监控中'
     }
   ]
   /**

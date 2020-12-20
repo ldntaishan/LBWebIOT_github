@@ -96,6 +96,13 @@ export function userEquipment(equipmentId) {
   })
 }
 //--传感器管理 片段-----------
+export function seSensorList(query) {
+  return request({
+    url: serverBaseURL + '/ss/f_sslist',
+    method: 'get',
+    params: { query }
+  })
+}
 export function list_monitoring(query) {
   return request({
     url: serverBaseURL + '/ss/list_monitoring',
