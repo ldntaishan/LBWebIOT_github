@@ -72,9 +72,10 @@
 
       <el-table-column label="监控状态" min-width="100px" align="center">
         <template slot-scope="{row}">
-          <el-tag v-if="row.monitoringState" :type="row.monitoringState | monitoringStatusFilter">
+          <el-tag v-if="row.useState=='enable'&&row.monitoringState!=null" :type="row.monitoringState | monitoringStatusFilter">
             {{ row.monitoringState | monitoringNameFilter}}
           </el-tag>
+          <!-- <span v-else>--</span> -->
         </template>
       </el-table-column>
 
@@ -243,7 +244,7 @@
   }, {})
 
   export default {
-    name: 'ComplexTable',
+    name: 'SensorList',
     components: {
       Pagination
     },
