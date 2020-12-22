@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <el-row :gutter="20" class="wind-tower" style="padding: 14px;">
     <el-col v-for="(sensor, index) in sensorWarningList" align='middle' :key="sensor" :xs="8" :sm="8" :lg="4">
       <el-card shadow="hover" :body-style="{ padding: '5px' }">
@@ -10,33 +10,46 @@
           <div >位置：{{sensor.equipmentName}}</div>
         </el-row>
         <el-row type="flex" justify="start">
-          <div type="info">点位：{{sensor.sensorDescription}}</div>
+          <div >点位：{{sensor.sensorDescription}}</div>
         </el-row>
         <el-row type="flex" justify="start">
           <div  v-if="sensor.monitoringState">状态：{{sensor.monitoringState | monitoringNameFilter}}</div>
           <div  v-else>状态：</div>
         </el-row>
         <el-row type="flex" justify="space-between">
-          <div type="info">偏移值：{{sensor.absoluteValue}}</div>
+          <div >偏移值：{{sensor.absoluteValue}}</div>
           <el-button type="text" class="button" @click="handleDetails(sensor)">详情</el-button>
         </el-row>
-
-
-        <!-- <div style="padding: 14px;float: left;">
-          <span>位置：{{sensor.equipmentName}}</span>
-          <span>点位：{{sensor.sensorDescription}}</span>
-          <div>
-            <span v-if="sensor.monitoringState">状态：{{sensor.monitoringState | monitoringNameFilter}}</span>
-            <span v-else>状态：</span>
-          </div>
-          <div justify='space-around' class="bottom clearfix">
-            <span>偏移值：{{sensor.absoluteValue}}</span>
-            <el-button type="text" class="button" @click="handleDetails(sensor)">详情</el-button>
-          </div>
-        </div> -->
       </el-card>
     </el-col>
   </el-row>
+</template> -->
+
+<template>
+  <el-table v-if="sensorWarningList" :data="sensorWarningList" stripe style="width: 100%;padding-top: 15px;">
+    <el-table-column label="风塔位置" min-width="130">
+      <template slot-scope="{row}">
+        {{row.equipmentName}}
+      </template>
+    </el-table-column>
+    <el-table-column label="螺栓点位" width="150" align="center">
+      <template slot-scope="{row}">
+        {{row.sensorDescription}}
+      </template>
+    </el-table-column>
+    <el-table-column label="监控状态" width="100" align="center">
+      <template slot-scope="{row}">
+        <el-tag v-if="row.useState=='enable'&&row.monitoringState!=null" :type="row.monitoringState | monitoringStatusFilter">
+          {{ row.monitoringState | monitoringNameFilter}}
+        </el-tag>
+      </template>
+    </el-table-column>
+    <el-table-column label="偏移值" width="80" align="center">
+      <template slot-scope="{row}">
+        {{row.absoluteValue}}
+      </template>
+    </el-table-column>
+  </el-table>
 </template>
 
 <script>
@@ -80,6 +93,9 @@
   }, {})
   export default {
     name: 'windTower',
+    props:{
+      monitoringState:String
+    },
     filters: {
       monitoringStatusFilter(status) {
         return monitoringStatusMap[status] != undefined ? monitoringStatusMap[status].type : ''
@@ -98,7 +114,7 @@
           page: 1,
           limit: 1000,
           useState: 'enable',
-          monitoringState: 'alert'
+          monitoringState:this.$props.monitoringState
         },
         monitoringStatusTypeOptions
       }
@@ -115,6 +131,7 @@
     },
     methods: {
       getSensorWarningList() {
+        console.log(this.$props.monitoringState);
         this.listLoading = true
         list_monitoring(this.listQuery).then(response => {
           this.sensorWarningList = response.callbackList

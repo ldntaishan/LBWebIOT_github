@@ -1,7 +1,14 @@
 <template>
-  <div class="dashboard-editor-container">
+  <div class="dashboard-container" style="background-color: #f9fafc;">
     <panel-group />
-    <wind-tower />
+    <el-row :gutter="40">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:10px;">
+        <wind-tower monitoring-state="alert" />
+      </el-col>
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="margin-bottom:10px;">
+        <wind-tower monitoring-state="offline"/>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
