@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container" style="background-color: #f9fafc;">
+  <div class="dashboard-container" style="background-color: #2d2f33;">
     <panel-group />
     <el-row :gutter="40">
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:10px;">

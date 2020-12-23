@@ -1,9 +1,12 @@
 <template>
-  <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleIndexSensorNumber()">
+
+
+
+  <el-row :gutter="40" class="panel-group" style="margin-left:15px;">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;border-radius: 15px;">
+      <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber() ">
         <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+          <svg-icon icon-class="node-red" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -13,10 +16,10 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleIndexSensorNumber()">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;">
+      <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
+          <svg-icon icon-class="highly" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -26,8 +29,8 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleIndexSensorNumber()">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;">
+      <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper icon-money">
           <svg-icon icon-class="money" class-name="card-panel-icon" />
         </div>
@@ -39,8 +42,8 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleIndexSensorNumber()">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;">
+      <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="shopping" class-name="card-panel-icon" />
         </div>
@@ -52,8 +55,8 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleIndexSensorNumber()">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;">
+      <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="shopping" class-name="card-panel-icon" />
         </div>

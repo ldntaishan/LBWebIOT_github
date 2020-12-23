@@ -21,7 +21,7 @@ const systemSetRouter = {
     },
     {
       path: 'sensor-list',
-      component: () => import('@/views/system-operation/sensor-list'),
+      component: () => import('@/views/table/complex-table'),
       name: 'sensor-list',
       meta: { title: '---扫描频率' }
     },

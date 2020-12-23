@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-// const serverBaseURL = 'http://localhost:8080/LBServerIOT_war_exploded'// 我的笔记本环境
+const serverBaseURL = 'http://localhost:8080/LBServerIOT_war_exploded'// 我的笔记本环境
 // const serverBaseURL = "http://localhost:8080/LBServerIOT_github_war_exploded/";//我的台式机环境
-const serverBaseURL = "http://39.106.55.120:8080";//线上服务器环境
+// const serverBaseURL = "http://39.106.55.120:8080";//线上服务器环境
 
 export function fetchList(query) {
   return request({
@@ -129,8 +129,16 @@ export function createSensor(equipmentId,sensorDescription,sensorType,devNo,warn
 export function index_sensor_number() {
   return request({
     url: serverBaseURL + '/ss/index_sensor_number',
-    // url: serverBaseURL + '/app/t5',//随机数访问接口
     method: 'get'
   })
 }
+//传感器重置
+export function sensor_reset(sensorId) {
+  return request({
+    url: serverBaseURL + '/ss/sensor_reset',
+    method: 'get',
+    params: { sensorId }
+  })
+}
+
   //-------------------------

@@ -90,6 +90,9 @@
           <el-button v-if="row.useState!='enable'" size="mini" type="success" @click="handleModifyStatus(row,'enable')">
             启用
           </el-button>
+          <el-button v-if="row.useState!='enable'" type="primary" size="mini" @click="handleSensorReset(row)">
+            重置
+          </el-button>
           <!-- <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button> -->
@@ -160,7 +163,8 @@
     update_useState,
     createSensor,
     updateArticle,
-    userEquipment
+    userEquipment,
+    sensor_reset
   } from '@/api/article'
   import waves from '@/directive/waves' // waves directive
   import {
@@ -375,6 +379,21 @@
           row.useState = useState
           this.listLoading = false
         })
+
+      },
+      handleSensorReset(row) {
+          this.listLoading = true
+          sensor_reset(row.sensorId).then(response => {
+              row.absoluteValue=response.absoluteValue
+              row.monitoringState=response.monitoringState
+              row.uploadTime=response.uploadTime
+
+              this.$message({
+                  message: '操作成功',
+                  type: 'success'
+              })
+              this.listLoading = false
+          })
 
       },
       sortChange(data) {
