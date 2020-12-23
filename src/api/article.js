@@ -119,11 +119,27 @@ export function update_useState(sensorId,useState) {
   })
 }
 
+//创建传感器
 export function createSensor(equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState) {
   return request({
     url: serverBaseURL + '/ss/crt_ss',
     method: 'get',
     params: { equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState }
+  })
+}
+//编辑传感器
+export function updateSensor(equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState,sensorId) {
+  return request({
+    url: serverBaseURL + '/ss/update_ss',
+    method: 'get',
+    params: {equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState,sensorId}
+  })
+}
+//查询全部风塔
+export function f_eqmtlistall() {
+  return request({
+    url: serverBaseURL + '/eqmt/f_eqmtlistall',
+    method: 'get'
   })
 }
 export function index_sensor_number() {

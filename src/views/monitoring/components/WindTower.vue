@@ -131,7 +131,7 @@
     },
     methods: {
       getSensorWarningList() {
-        console.log(this.$props.monitoringState);
+        // console.log(this.$props.monitoringState);
         this.listLoading = true
         list_monitoring(this.listQuery).then(response => {
           this.sensorWarningList = response.callbackList
