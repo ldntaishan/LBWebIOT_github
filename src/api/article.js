@@ -4,6 +4,7 @@ import request from '@/utils/request'
 // const serverBaseURL = "http://localhost:8080/LBServerIOT_github_war_exploded/";//我的台式机环境
 const serverBaseURL = "http://39.106.55.120:8080";//线上服务器环境
 
+
 export function fetchList(query) {
   return request({
     url: '/vue-element-admin/article/list',
