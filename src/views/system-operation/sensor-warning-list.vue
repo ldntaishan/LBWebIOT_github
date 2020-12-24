@@ -15,6 +15,9 @@
       <!-- <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
         reviewer
       </el-checkbox> -->
+      <el-checkbox v-model="rvscan" class="filter-item" style="margin-left:15px;">
+        实时监控
+      </el-checkbox>
     </div>
 
     <el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%;">
@@ -206,13 +209,14 @@
         },
         useStatusTypeOptions,
         monitoringStatusTypeOptions,
+        rvscan: false, //是否实时刷新
         downloadLoading: false
       }
     },
     created() {
       this.getList()
       this.timer = setInterval(() => {
-        setTimeout(this.getList(), 0)
+        setTimeout(this.timeoutRefresh(), 0)
       }, 1000 * 6)
     },
     beforeDestroy() {
@@ -233,10 +237,11 @@
           // }, 0.7 * 1000)
         })
       },
-      // handleFilter() {
-      //     this.listQuery.page = 1
-      //     this.getList()
-      // },
+      timeoutRefresh(){
+        if(this.rvscan){
+          this.getList()
+        }
+      },
       handleModifyStatus(row, useState) {
         this.listLoading = true
         update_useState(row.sensorId, useState).then(response => {

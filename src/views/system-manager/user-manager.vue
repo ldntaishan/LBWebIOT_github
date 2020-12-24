@@ -111,9 +111,9 @@
           <!-- <el-button v-if="row.userState!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
             Draft
           </el-button> -->
-          <el-button v-if="row.userState!='2'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            删除
-          </el-button>
+          <el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="handleDelete(row,$index)">
+            <el-button size="mini" type="danger" slot="reference">删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>

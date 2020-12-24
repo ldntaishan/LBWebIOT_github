@@ -57,9 +57,12 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-if="row.userState!='2'" size="mini" type="danger" @click="handleDelete(row,$index)">
+          <!-- <el-button v-if="row.userState!='2'" size="mini" type="danger" @click="handleDelete(row,$index)">
             删除
-          </el-button>
+          </el-button> -->
+          <el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="handleDelete(row,$index)">
+            <el-button size="mini" type="danger" slot="reference">删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -112,7 +115,8 @@
     import {
         seEquipmentList,
         createEquipment,
-        update_eqmt
+        update_eqmt,
+        delEquipment
     } from '@/api/article'
     import waves from '@/directive/waves' // waves directive
     import {
@@ -204,10 +208,10 @@
                 rules: {
                     // type: [{required: true,message: 'type is required',trigger: 'change'}],
                     // timestamp: [{type: 'date',required: true,message: 'timestamp is required',trigger: 'change'}],
-                    userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-                    userPassWord: [{ required: true, message: '请设定密码', trigger: 'blur' }],
-                    userTel: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-                    userRole: [{ required: true, message: '请选择用户角色', trigger: 'change' }]
+                    organization: [{ required: true, message: '请输入所属风场', trigger: 'blur' }],
+                    equipmentName: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
+                    equipmentType: [{ required: true, message: '请输入设备型号', trigger: 'blur' }],
+                    equipmentNO: [{ required: true, message: '请输入设备编号', trigger: 'blur' }]
                 },
                 downloadLoading: false
             }
@@ -315,7 +319,7 @@
                     if (valid) {
                         const tempData = Object.assign({}, this.temp)
                         update_eqmt(tempData).then(() => {
-                            const index = this.list.findIndex(v => v.id === this.temp.id)
+                            const index = this.list.findIndex(v => v.equipmentId === this.temp.equipmentId)
                             this.list.splice(index, 1, this.temp)
                             this.dialogFormVisible = false
                             this.$notify({
@@ -330,12 +334,11 @@
             },
             handleDelete(row, index) {
                 this.temp = Object.assign({}, row) // copy obj
-
-                userEquipment(this.temp.equipmentId).then(() => {
+                delEquipment(this.temp.equipmentId).then(() => {
                     this.list.splice(index, 1)
                     this.$notify({
                         title: 'Success',
-                        message: 'Delete Successfully',
+                        message: '该风塔已删除',
                         type: 'success',
                         duration: 2000
                     })

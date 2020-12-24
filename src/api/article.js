@@ -89,7 +89,7 @@ export function createEquipment(organization, equipmentName, equipmentType, equi
     })
 }
 //删除设备
-export function userEquipment(equipmentId) {
+export function delEquipment(equipmentId) {
   return request({
     url: serverBaseURL + '/eqmt/del_eqmt',
     method: 'get',

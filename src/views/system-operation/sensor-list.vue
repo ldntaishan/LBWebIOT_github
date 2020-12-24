@@ -6,21 +6,25 @@
       <el-select v-model="listQuery.useState" style="width: 140px" class="filter-item" clearable placeholder='工作状态'>
         <el-option v-for="item in useStatusTypeOptions" :key="item.useState" :label="item.name" :value="item.useState" />
       </el-select>
-      <el-select v-model="listQuery.monitoringState" style="width: 140px;margin-left: 10px;" class="filter-item" clearable placeholder='监控状态'>
+      <el-select v-model="listQuery.monitoringState" style="width: 140px;margin-left: 10px;" class="filter-item"
+        clearable placeholder='监控状态'>
         <el-option v-for="item in monitoringStatusTypeOptions" :key="item.monitoringState" :label="item.name" :value="item.monitoringState" />
       </el-select>
       <!-- monitoringState -->
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" style="margin-left:15px;" @click="handleFilter">
         查询
       </el-button>
-<!--      <el-button class="filter-item" style="margin-left: 15px;" type="primary" icon="el-icon-edit" @click="handleCreate">-->
-<!--        创建-->
-<!--      </el-button>-->
-<!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
-<!--        导出-->
-<!--      </el-button>-->
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
+      <!--      <el-button class="filter-item" style="margin-left: 15px;" type="primary" icon="el-icon-edit" @click="handleCreate">-->
+      <!--        创建-->
+      <!--      </el-button>-->
+      <!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
+      <!--        导出-->
+      <!--      </el-button>-->
+      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;">
         控制操作
+      </el-checkbox>
+      <el-checkbox v-model="rvscan" class="filter-item" style="margin-left:15px;">
+        实时监控
       </el-checkbox>
     </div>
 
@@ -234,14 +238,14 @@
   ]
 
   const useStatusMap = useStatusTypeOptions.reduce((acc, use) => {
-    acc[use.useState]={}
+    acc[use.useState] = {}
     acc[use.useState].type = use.type
     acc[use.useState].name = use.name
     return acc
   }, {})
 
   const monitoringStatusMap = monitoringStatusTypeOptions.reduce((acc, monitoring) => {
-    acc[monitoring.monitoringState]={}
+    acc[monitoring.monitoringState] = {}
     acc[monitoring.monitoringState].type = monitoring.type
     acc[monitoring.monitoringState].name = monitoring.name
     return acc
@@ -303,6 +307,7 @@
         }],
         statusOptions: ['published', 'draft', 'deleted'],
         showReviewer: false,
+        rvscan: false, //是否实时刷新
         temp: {
           sensorId: undefined,
           sensorDescription: '',
@@ -357,9 +362,10 @@
     created() {
       this.getList()
       this.sensorListTimer = setInterval(() => {
-        setTimeout(this.getList(), 0)
+        setTimeout(this.timeoutRefresh(), 0)
       }, 1000 * 6)
     },
+
     beforeDestroy() {
       clearInterval(this.sensorListTimer);
       this.sensorListTimer = null;
@@ -367,7 +373,7 @@
     methods: {
       getList() {
         // this.listLoading = true
-          this.listLoading = false
+        this.listLoading = false
         list_monitoring(this.listQuery).then(response => {
           this.list = response.callbackList
           this.total = response.total
@@ -378,6 +384,11 @@
             // this.listLoading = false
           }, 0.7 * 1000)
         })
+      },
+      timeoutRefresh(){
+        if(this.rvscan){
+          this.getList()
+        }
       },
       handleFilter() {
         this.listQuery.page = 1
@@ -396,18 +407,18 @@
 
       },
       handleSensorReset(row) {
-          this.listLoading = true
-          sensor_reset(row.sensorId).then(response => {
-              row.absoluteValue=response.absoluteValue
-              row.monitoringState=response.monitoringState
-              row.uploadTime=response.uploadTime
+        this.listLoading = true
+        sensor_reset(row.sensorId).then(response => {
+          row.absoluteValue = response.absoluteValue
+          row.monitoringState = response.monitoringState
+          row.uploadTime = response.uploadTime
 
-              this.$message({
-                  message: '操作成功',
-                  type: 'success'
-              })
-              this.listLoading = false
+          this.$message({
+            message: '操作成功',
+            type: 'success'
           })
+          this.listLoading = false
+        })
 
       },
       sortChange(data) {
