@@ -1,7 +1,7 @@
 <template>
-  <el-row :gutter="40" class="panel-group" >
+  <el-row :gutter="40" class="panel-group">
 
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="max-width: 360px">
       <div class="card-panel" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper color-red1">
           <svg-icon icon-class="alert" class-name="card-panel-icon" />
@@ -27,7 +27,7 @@
         </div>
       </div>
     </el-col> -->
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="max-width: 360px">
       <div class="card-panel" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper color-green1">
           <svg-icon icon-class="normal" class-name="card-panel-icon" />
@@ -41,7 +41,7 @@
       </div>
     </el-col>
 
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="max-width: 360px">
       <div class="card-panel" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper color-gray1">
           <svg-icon icon-class="offline3" class-name="card-panel-icon" />
@@ -55,7 +55,7 @@
       </div>
     </el-col>
 
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="max-width: 360px">
       <div class="card-panel" @click="handleIndexSensorNumber() ">
         <div class="card-panel-icon-wrapper color-blue1">
           <svg-icon icon-class="node-red" class-name="card-panel-icon" />
@@ -72,61 +72,62 @@
 </template>
 
 <script>
-  import CountTo from 'vue-count-to'
-  import {
-    index_sensor_number,
-    update_useState
-  } from '@/api/article'
-  export default {
-    components: {
-      CountTo
-    },
-    data() {
-      return {
-        timer: null, //定时器
-        indexSensorNumber: {
-          "allTotal": 0,
-          "disableTotal": 0,
-          "alertTotal": 0,
-          "offlineTotal": 0,
-          "normalTotal": 0
-        }
+import CountTo from 'vue-count-to'
+import {
+  index_sensor_number
+  // update_useState
+} from '@/api/article'
+export default {
+  components: {
+    CountTo
+  },
+  data() {
+    return {
+      timer: null,
+      indexSensorNumber: {
+        'allTotal': 0,
+        'disableTotal': 0,
+        'alertTotal': 0,
+        'offlineTotal': 0,
+        'normalTotal': 0
       }
-    },
-    created() {
-      this.handleIndexSensorNumber()
-      this.timer = setInterval(() => {
-        setTimeout(this.handleIndexSensorNumber, 0)
-      }, 1000 * 6)
-    },
-    methods: {
+    }
+  },
+  created() {
+    this.handleIndexSensorNumber()
+    this.timer = setInterval(() => {
+      setTimeout(this.handleIndexSensorNumber, 0)
+    }, 1000 * 6)
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
+    this.timer = null
+  },
+  methods: {
 
-      handleIndexSensorNumber() {
-        index_sensor_number().then(response => {
-          this.indexSensorNumber = response
-          // console.log(response.randomValue)
-          // this.indexSensorNumber.allTotal=response.randomValue
-        })
-      }
-    },
-    // activated() {
-    //   console.log("执行activated")
-    //    // if(timer==null){
-    //      this.timer = setInterval(() => {
-    //        setTimeout(this.handleIndexSensorNumber, 0)
-    //      }, 1000 * 3)
-    //    // }
-    // },
-    // deactivated() {
-    //   console.log("执行activated")
-    //   clearInterval(this.timer);
-    //   this.timer = null;
-    // },
-    beforeDestroy() {
-      clearInterval(this.timer);
-      this.timer = null;
+    handleIndexSensorNumber() {
+      index_sensor_number().then(response => {
+        this.indexSensorNumber = response
+        // console.log(response.randomValue)
+        // this.indexSensorNumber.allTotal=response.randomValue
+      })
     }
   }
+  // activated() {
+  //   console.log("执行activated")
+  //    // if(timer==null){
+  //      this.timer = setInterval(() => {
+  //        setTimeout(this.handleIndexSensorNumber, 0)
+  //      }, 1000 * 3)
+  //    // }
+  // },
+  // deactivated() {
+  //   console.log("执行activated")
+  //   clearInterval(this.timer);
+  //   this.timer = null;
+  // },
+
+}
 </script>
 
 <style lang="scss" scoped>
@@ -152,8 +153,6 @@
         .card-panel-icon-wrapper {
           color: #fff;
         }
-
-
         .color-red1 {
           background: #d81e06;
         }
