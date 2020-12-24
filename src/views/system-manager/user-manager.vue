@@ -102,7 +102,7 @@
           <el-button type="success" size="mini" @click="handleUpdate(row)">
             查看
           </el-button>
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+          <el-button type="primary" style="margin-right: 10px" size="mini"  @click="handleUpdate(row)">
             编辑
           </el-button>
           <!-- <el-button v-if="row.userState!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
@@ -111,9 +111,10 @@
           <!-- <el-button v-if="row.userState!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
             Draft
           </el-button> -->
-          <el-popconfirm title="这是一段内容确定删除吗？" @onConfirm="handleDelete(row,$index)">
-            <el-button size="mini" type="danger" slot="reference">删除</el-button>
+          <el-popconfirm title="确定删除吗？"  @onConfirm="handleDelete(row,$index)">
+            <el-button size="mini" type="danger"  slot="reference">删除</el-button>
           </el-popconfirm>
+
         </template>
       </el-table-column>
     </el-table>

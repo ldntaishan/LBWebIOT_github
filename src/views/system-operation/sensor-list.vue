@@ -54,15 +54,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="报警阈值" min-width="100px" align="center">
+      <el-table-column label="报警阈值" min-width="80px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.warningValue }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="实时监控值" min-width="100px" align="center">
+      <el-table-column label="监控值" min-width="80px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.absoluteValue }}</span>
+          <span  style="color: #ff750d">{{ row.absoluteValue }}</span>
         </template>
       </el-table-column>
 
@@ -80,7 +80,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="监控状态" min-width="100px" align="center">
+      <el-table-column label="监控状态" min-width="90px" align="center">
         <template slot-scope="{row}">
           <el-tag v-if="row.useState=='enable'&&row.monitoringState!=null" :type="row.monitoringState | monitoringStatusFilter">
             {{ row.monitoringState | monitoringNameFilter}}

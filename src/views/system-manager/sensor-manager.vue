@@ -92,12 +92,12 @@
           <el-button type="success" size="mini" @click="handleUpdate(row)">
             查看
           </el-button>
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+          <el-button type="primary" style="margin-right: 10px" size="mini" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-if="row.userState!='2'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            删除
-          </el-button>
+          <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(row,$index)">
+            <el-button size="mini" type="danger" slot="reference">删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
