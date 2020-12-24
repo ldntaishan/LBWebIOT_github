@@ -112,8 +112,7 @@
     import {
         seEquipmentList,
         createEquipment,
-        updateArticle,
-        userEquipment
+        update_eqmt
     } from '@/api/article'
     import waves from '@/directive/waves' // waves directive
     import {
@@ -192,6 +191,7 @@
                     equipmentNO:'',
                     sysState:'1',
                     createdate: ''
+
                 },
                 dialogFormVisible: false,
                 dialogStatus: '',
@@ -304,7 +304,6 @@
             },
             handleUpdate(row) {
                 this.temp = Object.assign({}, row) // copy obj
-                this.temp.timestamp = new Date(this.temp.timestamp)
                 this.dialogStatus = 'update'
                 this.dialogFormVisible = true
                 this.$nextTick(() => {
@@ -315,8 +314,7 @@
                 this.$refs['dataForm'].validate((valid) => {
                     if (valid) {
                         const tempData = Object.assign({}, this.temp)
-                        tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-                        updateArticle(tempData).then(() => {
+                        update_eqmt(tempData).then(() => {
                             const index = this.list.findIndex(v => v.id === this.temp.id)
                             this.list.splice(index, 1, this.temp)
                             this.dialogFormVisible = false

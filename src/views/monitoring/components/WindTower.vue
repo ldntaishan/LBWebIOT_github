@@ -26,6 +26,38 @@
 </template> -->
 
 <template>
+  <el-row :gutter="8" class="wind-tower">
+    <el-col v-for="(eqmt, index) in eqmtlistall" :key="eqmt.equipmentId" :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}"
+      :lg="{span: 6}" :xl="{span: 7}" style="margin-bottom:30px;">
+      <el-card shadow="hover" class="box-card-component" style="margin-left:8px;">
+        <div slot="header" class="box-card-header">
+          <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png">
+        </div>
+        <div style="position:relative;">
+          <mallki class-name="mallki-text" :text="eqmt.equipmentName" href="#/system-opeartion/sensor-list"/>
+          <!-- <pan-thumb :image="avatar" class="panThumb" align="left" /> -->
+          <div align="justify" style="padding-top:40px;" class="progress-item">
+            <span>总数:</span>
+            <el-tag style="margin-left:10px;margin-right: 10px ">{{eqmt.allTotal}}</el-tag>
+            <span>正常:</span>
+            <el-tag type="success" style="margin-left:10px ;margin-right: 10px">{{eqmt.normalTotal}}</el-tag>
+          </div>
+          <div align="justify" style="padding-top:10px;" class="progress-item">
+            <span>报警:</span>
+              <el-tag type="danger" style="margin-left:10px;margin-right: 10px ">{{eqmt.alertTotal}}</el-tag>
+              <span>掉线:</span>
+              <el-tag type="info" style="margin-left:10px ;margin-right: 10px">{{eqmt.offlineTotal}}</el-tag>
+
+          </div>
+        </div>
+
+      </el-card>
+    </el-col>
+  </el-row>
+</template>
+
+
+<!-- <template>
   <el-table v-if="sensorWarningList" :data="sensorWarningList" stripe style="width: 100%;padding-top: 15px;">
     <el-table-column label="风塔位置" min-width="130">
       <template slot-scope="{row}">
@@ -50,12 +82,14 @@
       </template>
     </el-table-column>
   </el-table>
-</template>
+</template> -->
 
 <script>
   import {
-    list_monitoring
+    f_eqmtlistallcount
   } from '@/api/article'
+  // import PanThumb from '@/components/PanThumb'
+  import Mallki from '@/components/TextHoverEffect/Mallki'
   /**
    * 监控状态
    * 初始化 0 Initialize
@@ -93,8 +127,9 @@
   }, {})
   export default {
     name: 'windTower',
-    props:{
-      monitoringState:String
+    components: { Mallki},
+    props: {
+      monitoringState: String
     },
     filters: {
       monitoringStatusFilter(status) {
@@ -107,14 +142,14 @@
     data() {
       return {
         timer: null, //定时器
-        sensorWarningList: null,
+        eqmtlistall: null,
         listLoading: true,
         // 查询条件参数
         listQuery: {
           page: 1,
           limit: 1000,
           useState: 'enable',
-          monitoringState:this.$props.monitoringState
+          monitoringState: this.$props.monitoringState
         },
         monitoringStatusTypeOptions
       }
@@ -123,7 +158,7 @@
       this.getSensorWarningList()
       this.timer = setInterval(() => {
         setTimeout(this.getSensorWarningList(), 0)
-      }, 1000 * 10)
+      }, 1000 * 6)
     },
     beforeDestroy() {
       clearInterval(this.timer);
@@ -133,8 +168,8 @@
       getSensorWarningList() {
         // console.log(this.$props.monitoringState);
         this.listLoading = true
-        list_monitoring(this.listQuery).then(response => {
-          this.sensorWarningList = response.callbackList
+        f_eqmtlistallcount().then(response => {
+          this.eqmtlistall = response.callbackList
           this.listLoading = false
         })
       },
@@ -147,12 +182,50 @@
 </script>
 
 <style lang="scss" scoped>
-  .bg-purple {
-    background: #d3dce6;
+  .box-card-component {
+    .box-card-header {
+      position: relative;
+      height: 220px;
+      img {
+        width: 100%;
+        height: 100%;
+        transition: all 0.2s linear;
+        &:hover {
+          transform: scale(1.1, 1.1);
+          filter: contrast(130%);
+        }
+      }
+    }
+    .mallki-text {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .panThumb {
+      z-index: 100;
+      height: 70px!important;
+      width: 70px!important;
+      position: absolute!important;
+      top: -45px;
+      left: 0px;
+      border: 5px solid #ffffff;
+      background-color: #fff;
+      margin: auto;
+      box-shadow: none!important;
+      ::v-deep .pan-info {
+        box-shadow: none!important;
+      }
+    }
+    .progress-item {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    // @media only screen and (max-width: 1510px){
+    //   .mallki-text{
+    //     display: none;
+    //   }
+    // }
   }
-
-  .bg-purple-light {
-    text-color: #e5e9f2;
-  }
-
 </style>

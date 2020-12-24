@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-const serverBaseURL = 'http://localhost:8080/LBServerIOT_war_exploded'// 我的笔记本环境
+// const serverBaseURL = 'http://localhost:8080/LBServerIOT_war_exploded'// 我的笔记本环境
 // const serverBaseURL = "http://localhost:8080/LBServerIOT_github_war_exploded/";//我的台式机环境
-// const serverBaseURL = "http://39.106.55.120:8080";//线上服务器环境
+const serverBaseURL = "http://39.106.55.120:8080";//线上服务器环境
 
 export function fetchList(query) {
   return request({
@@ -140,6 +140,27 @@ export function f_eqmtlistall() {
   return request({
     url: serverBaseURL + '/eqmt/f_eqmtlistall',
     method: 'get'
+  })
+}
+//在线监测页查询风塔概览
+export function f_eqmtlistallcount() {
+  return request({
+    url: serverBaseURL + '/eqmt/f_eqmtlistallcount',
+    method: 'get'
+  })
+}
+//编辑风塔
+export function update_eqmt(eqmt) {
+  return request({
+    url: serverBaseURL + '/eqmt/update_eqmt',
+    method: 'get',
+    // params: {'organization':eqmt.organization,
+    //           'equipmentName':eqmt.equipmentName,
+    //           'equipmentType':eqmt.equipmentType,
+    //           'equipmentNO':eqmt.equipmentNO,
+    //           'sysState':eqmt.sysState,
+    //           'equipmentId':eqmt.equipmentId}
+    params:eqmt
   })
 }
 export function index_sensor_number() {

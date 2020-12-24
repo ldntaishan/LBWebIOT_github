@@ -213,7 +213,7 @@
       this.getList()
       this.timer = setInterval(() => {
         setTimeout(this.getList(), 0)
-      }, 1000 * 10)
+      }, 1000 * 6)
     },
     beforeDestroy() {
       clearInterval(this.timer);

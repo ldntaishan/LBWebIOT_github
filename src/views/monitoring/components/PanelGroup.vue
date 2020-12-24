@@ -2,9 +2,9 @@
 
 
 
-  <el-row :gutter="40" class="panel-group" style="margin-left:15px;">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;border-radius: 15px;">
-      <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber() ">
+  <el-row :gutter="40" class="panel-group">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel" @click="handleIndexSensorNumber() ">
         <div class="card-panel-icon-wrapper icon-people">
           <svg-icon icon-class="node-red" class-name="card-panel-icon" />
         </div>
@@ -16,8 +16,8 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;">
-      <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber()">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper icon-message">
           <svg-icon icon-class="highly" class-name="card-panel-icon" />
         </div>
@@ -25,11 +25,11 @@
           <div class="card-panel-text">
             报警数:
           </div>
-          <count-to :start-val="0" :end-val="indexSensorNumber.alertTotal" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="indexSensorNumber.alertTotal" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;">
+    <!-- <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;">
       <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper icon-money">
           <svg-icon icon-class="money" class-name="card-panel-icon" />
@@ -41,9 +41,9 @@
           <count-to :start-val="0" :end-val="indexSensorNumber.disableTotal" :duration="3200" class="card-panel-num" />
         </div>
       </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;">
-      <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber()">
+    </el-col> -->
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="shopping" class-name="card-panel-icon" />
         </div>
@@ -51,12 +51,12 @@
           <div class="card-panel-text">
             掉线数:
           </div>
-          <count-to :start-val="0" :end-val="indexSensorNumber.offlineTotal" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="indexSensorNumber.offlineTotal" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" style="margin-left:15px;margin-top: 15px;">
-      <div class="card-panel" style="border-radius: 10px;" @click="handleIndexSensorNumber()">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel" @click="handleIndexSensorNumber()">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="shopping" class-name="card-panel-icon" />
         </div>
@@ -97,7 +97,7 @@
       this.handleIndexSensorNumber()
       this.timer = setInterval(() => {
         setTimeout(this.handleIndexSensorNumber, 0)
-      }, 1000 * 10)
+      }, 1000 * 6)
     },
     methods: {
 

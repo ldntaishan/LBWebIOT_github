@@ -6,14 +6,14 @@
       <el-select v-model="listQuery.useState" style="width: 140px" class="filter-item" clearable placeholder='工作状态'>
         <el-option v-for="item in useStatusTypeOptions" :key="item.useState" :label="item.name" :value="item.useState" />
       </el-select>
-      <el-select v-model="listQuery.monitoringState" style="width: 140px" class="filter-item" clearable placeholder='监控状态'>
+      <el-select v-model="listQuery.monitoringState" style="width: 140px;margin-left: 10px;" class="filter-item" clearable placeholder='监控状态'>
         <el-option v-for="item in monitoringStatusTypeOptions" :key="item.monitoringState" :label="item.name" :value="item.monitoringState" />
       </el-select>
       <!-- monitoringState -->
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" style="margin-left:15px;" @click="handleFilter">
         查询
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+      <el-button class="filter-item" style="margin-left: 15px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         创建
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
@@ -79,7 +79,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
+      <el-table-column v-if="showReviewer" label="操作" align="center" width="200" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <!--          <el-button type="success" size="mini" @click="handleUpdate(row)">-->
           <!--            重置-->
@@ -272,6 +272,7 @@
     },
     data() {
       return {
+        sensorListTimer: null, //定时器
         tableKey: 0,
         list: null,
         total: 0,
@@ -349,7 +350,13 @@
     },
     created() {
       this.getList()
-
+      this.sensorListTimer = setInterval(() => {
+        setTimeout(this.getList(), 0)
+      }, 1000 * 6)
+    },
+    beforeDestroy() {
+      clearInterval(this.sensorListTimer);
+      this.sensorListTimer = null;
     },
     methods: {
       getList() {
