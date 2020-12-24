@@ -14,7 +14,7 @@ const systemSetRouter = {
   children: [
     {
       path: 'sensor-warning-list',
-      component: () => import('@/views/system-operation/sensor-warning-list'),
+      component: () => import('@/views/monitoring-index/index'),
       name: 'sensor-warning-list',
       meta: { title: '---报警初始值' }
 
