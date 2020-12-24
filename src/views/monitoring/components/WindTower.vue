@@ -31,7 +31,7 @@
       :lg="{span: 6}" :xl="{span: 7}" style="margin-bottom:30px;">
       <el-card shadow="hover" class="box-card-component" style="margin-left:8px;">
         <div slot="header" class="box-card-header">
-          <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png">
+          <img src="@/assets/gifacc/fengche01.gif">
         </div>
         <div style="position:relative;">
           <mallki class-name="mallki-text" :text="eqmt.equipmentName" href="#/system-opeartion/sensor-list"/>

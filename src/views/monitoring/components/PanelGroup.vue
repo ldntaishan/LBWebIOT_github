@@ -1,25 +1,10 @@
 <template>
+  <el-row :gutter="40" class="panel-group" >
 
-
-
-  <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleIndexSensorNumber() ">
-        <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="node-red" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            点位总数:
-          </div>
-          <count-to :start-val="0" :end-val="indexSensorNumber.allTotal" :duration="2600" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleIndexSensorNumber()">
-        <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="highly" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper color-red1">
+          <svg-icon icon-class="alert" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -44,8 +29,22 @@
     </el-col> -->
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleIndexSensorNumber()">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper color-green1">
+          <svg-icon icon-class="normal" class-name="card-panel-icon" />
+        </div>
+        <div class="card-panel-description">
+          <div class="card-panel-text">
+            正常数:
+          </div>
+          <count-to :start-val="0" :end-val="indexSensorNumber.normalTotal" :duration="3600" class="card-panel-num" />
+        </div>
+      </div>
+    </el-col>
+
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel" @click="handleIndexSensorNumber()">
+        <div class="card-panel-icon-wrapper color-gray1">
+          <svg-icon icon-class="offline3" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -55,16 +54,17 @@
         </div>
       </div>
     </el-col>
+
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleIndexSensorNumber()">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
+      <div class="card-panel" @click="handleIndexSensorNumber() ">
+        <div class="card-panel-icon-wrapper color-blue1">
+          <svg-icon icon-class="node-red" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            正常数:
+            点位总数:
           </div>
-          <count-to :start-val="0" :end-val="indexSensorNumber.normalTotal" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="indexSensorNumber.allTotal" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -153,6 +153,20 @@
           color: #fff;
         }
 
+
+        .color-red1 {
+          background: #d81e06;
+        }
+        .color-green1 {
+          background: #29cc40;
+        }
+        .color-gray1 {
+          background: #919491;
+        }
+        .color-blue1 {
+          background: #2589ef;
+        }
+
         .icon-people {
           background: #40c9c6;
         }
@@ -168,6 +182,19 @@
         .icon-shopping {
           background: #34bfa3
         }
+      }
+
+      .color-red1 {
+        color: #d81e06;
+      }
+      .color-green1 {
+        color: #29cc40;
+      }
+      .color-gray1 {
+        color: #919491;
+      }
+      .color-blue1 {
+        color: #2589ef;
       }
 
       .icon-people {

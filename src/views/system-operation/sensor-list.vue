@@ -13,14 +13,14 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" style="margin-left:15px;" @click="handleFilter">
         查询
       </el-button>
-      <el-button class="filter-item" style="margin-left: 15px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        创建
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        导出
-      </el-button>
+<!--      <el-button class="filter-item" style="margin-left: 15px;" type="primary" icon="el-icon-edit" @click="handleCreate">-->
+<!--        创建-->
+<!--      </el-button>-->
+<!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
+<!--        导出-->
+<!--      </el-button>-->
       <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
+        控制操作
       </el-checkbox>
     </div>
 
@@ -41,6 +41,12 @@
       <el-table-column label="型号" min-width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.sensorType }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="唯一码" min-width="100px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.devNo }}</span>
         </template>
       </el-table-column>
 
@@ -360,7 +366,8 @@
     },
     methods: {
       getList() {
-        this.listLoading = true
+        // this.listLoading = true
+          this.listLoading = false
         list_monitoring(this.listQuery).then(response => {
           this.list = response.callbackList
           this.total = response.total
@@ -368,7 +375,7 @@
 
           // Just to simulate the time of the request
           setTimeout(() => {
-            this.listLoading = false
+            // this.listLoading = false
           }, 0.7 * 1000)
         })
       },

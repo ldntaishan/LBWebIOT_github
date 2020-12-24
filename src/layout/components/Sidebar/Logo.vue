@@ -9,6 +9,7 @@
         <img v-if="logo" :src="logo" class="sidebar-logo">
         <h1 class="sidebar-title">{{ title }} </h1>
       </router-link>
+
     </transition>
   </div>
 </template>
@@ -24,8 +25,10 @@ export default {
   },
   data() {
     return {
-      title: 'Vue Element Admin',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: '工业螺栓监测系统',
+      // logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      //   logo: '../assets/gifacc/lanborech.png'
+        logo: require('@/assets/gifacc/lanborech.png')
     }
   }
 }
@@ -44,7 +47,7 @@ export default {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: 50px;
+  height: 90px;
   line-height: 50px;
   background: #2b2f3a;
   text-align: center;
@@ -55,8 +58,8 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      width: 32px;
-      height: 32px;
+      width: 130px;
+      height: 35px;
       vertical-align: middle;
       margin-right: 12px;
     }
@@ -64,10 +67,10 @@ export default {
     & .sidebar-title {
       display: inline-block;
       margin: 0;
-      color: #fff;
+      color: #fafff3;
       font-weight: 600;
       line-height: 50px;
-      font-size: 14px;
+      font-size: 18px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }
