@@ -1,5 +1,8 @@
 <template>
+
   <div class="dashboard-editor-container">
+    <p class="p-title">提示声音:</p>
+    <el-button type="primary" @click="muiscPlay1">试听</el-button>
     <panel-group />
     <wind-tower monitoring-state="offline" />
     <!-- <el-row :gutter="40">
@@ -44,11 +47,16 @@
       return {
         lineChartData: lineChartData.newVisitis
       }
+
     },
     methods: {
       handleSetLineChartData(type) {
         this.lineChartData = lineChartData[type]
-      }
+      },
+      muiscPlay1(){
+            this.gamemuiscs1 = new Audio(require('@/assets/music/alert1.wav'));
+            this.gamemuiscs1.play();
+        }
     }
   }
 </script>

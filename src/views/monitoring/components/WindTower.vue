@@ -28,7 +28,7 @@
 <template>
   <el-row :gutter="8" class="wind-tower">
     <el-col v-for="(eqmt, index) in eqmtlistall" :key="eqmt.equipmentId" :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}"
-      :lg="{span: 6}" :xl="{span: 7}" style="margin-bottom:30px;max-width: 400px;min-width: 350px">
+      :lg="{span: 6}" :xl="{span: 7}" style="margin-bottom:30px;max-width: 400px;min-width: 300px">
       <el-card shadow="hover" class="box-card-component" style="margin-left:8px;">
         <div slot="header" class="box-card-header">
           <img src="@/assets/gifacc/fengche01.gif">
