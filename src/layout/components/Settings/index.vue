@@ -23,6 +23,11 @@
         <el-switch v-model="sidebarLogo" class="drawer-switch" />
       </div>
 
+      <div class="drawer-item">
+        <span>报警提示音</span>
+        <el-switch v-model="alarmSound" class="drawer-switch" />
+      </div>
+
     </div>
   </div>
 </template>
@@ -68,8 +73,20 @@ export default {
           value: val
         })
       }
-    }
+    },
+    alarmSound: {
+        get() {
+          return this.$store.state.settings.alarmSound
+        },
+        set(val) {
+          this.$store.dispatch('settings/changeSetting', {
+            key: 'alarmSound',
+            value: val
+          })
+        }
+      }
   },
+  
   methods: {
     themeChange(val) {
       this.$store.dispatch('settings/changeSetting', {

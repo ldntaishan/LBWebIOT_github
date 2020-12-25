@@ -77,6 +77,7 @@ import {
   index_sensor_number
   // update_useState
 } from '@/api/article'
+import { playAlarmSound } from '@/utils/audio'
 export default {
   components: {
     CountTo
@@ -110,8 +111,14 @@ export default {
         this.indexSensorNumber = response
         // console.log(response.randomValue)
         // this.indexSensorNumber.allTotal=response.randomValue
+        if(response.alertTotal>0&&this.isAlarmSound()){
+          playAlarmSound()
+        }
       })
-    }
+    },
+    isAlarmSound() {
+      return this.$store.state.settings.alarmSound
+    },
   }
   // activated() {
   //   console.log("执行activated")
