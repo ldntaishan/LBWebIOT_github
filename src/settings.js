@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Vue Element Admin',
+  title: '工业螺栓监测系统',
 
   /**
    * @type {boolean} true | false
@@ -24,12 +24,12 @@ module.exports = {
    * @description Whether show the logo in sidebar
    */
   sidebarLogo: true,
-  
+
   /**
    * 报警声音是否打开关闭
    */
   alarmSound:true,
-  
+
 
   /**
    * @type {string | array} 'production' | ['production', 'development']
