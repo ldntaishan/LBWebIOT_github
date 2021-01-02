@@ -39,7 +39,7 @@
 
       <el-table-column label="设备编码" min-width="120px">
         <template slot-scope="{row}">
-          <span >{{ row.devNo }}</span>
+          <span>{{ row.devNo }}</span>
         </template>
       </el-table-column>
 
@@ -145,279 +145,279 @@
 </template>
 
 <script>
-    import {
-        seSensorList,
-        createEquipment,
-        updateArticle,
-        userEquipment
-    } from '@/api/article'
-    import waves from '@/directive/waves' // waves directive
-    import {
-        parseTime
-    } from '@/utils'
-    import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import {
+  seSensorList,
+  createEquipment,
+  updateArticle,
+  userEquipment
+} from '@/api/article'
+import waves from '@/directive/waves' // waves directive
+import {
+  parseTime
+} from '@/utils'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
-    const calendarTypeOptions = [{
-        key: '1',
-        display_name: '超级管理员'
+const calendarTypeOptions = [{
+  key: '1',
+  display_name: '超级管理员'
+},
+{
+  key: '2',
+  display_name: '管理员'
+}
+]
+
+// arr to obj, such as { 1 : "超级管理员", 2 : "管理员" }
+const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.display_name
+  return acc
+}, {})
+
+export default {
+  name: 'ComplexTable',
+  components: {
+    Pagination
+  },
+  directives: {
+    waves
+  },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
     },
-        {
-            key: '2',
-            display_name: '管理员'
-        }
-    ]
-
-    // arr to obj, such as { 1 : "超级管理员", 2 : "管理员" }
-    const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-        acc[cur.key] = cur.display_name
-        return acc
-    }, {})
-
-    export default {
-        name: 'ComplexTable',
-        components: {
-            Pagination
-        },
-        directives: {
-            waves
-        },
-        filters: {
-            statusFilter(status) {
-                const statusMap = {
-                    published: 'success',
-                    draft: 'info',
-                    deleted: 'danger'
-                }
-                return statusMap[status]
-            },
-            typeFilter(userRole) {
-                return calendarTypeKeyValue[userRole]
-            }
-        },
-
-        data() {
-            return {
-                tableKey: 0,
-                list: null,
-                total: 0,
-                listLoading: true,
-                // 查询条件参数
-                listQuery: {
-                    page: 1,
-                    limit: 10,
-                    // importance: undefined,
-                    equipmentName: undefined
-                    // type: undefined
-                },
-                importanceOptions: [1, 2, 3],
-                calendarTypeOptions,
-                sortOptions: [{
-                    label: 'ID Ascending',
-                    key: '+id'
-                }, {
-                    label: 'ID Descending',
-                    key: '-id'
-                }],
-                statusOptions: ['published', 'draft', 'deleted'],
-                showReviewer: false,
-                temp: {
-                    sensorId:undefined,
-                    sensorDescription:'',
-                    sensorType:'',
-                    devNo:'',
-                    equipmentName:'',
-                    warningValue:'',
-                    allWarningId:'',
-                    nowTimeValue:'',
-                    absoluteValue:'',
-                    uploadTime:'',
-                    sysState:'',
-                    createdate:''
-                },
-                dialogFormVisible: false,
-                dialogStatus: '',
-                textMap: {
-                    update: '编辑',
-                    create: '创建'
-                },
-                dialogPvVisible: false,
-                pvData: [],
-                rules: {
-                    // type: [{required: true,message: 'type is required',trigger: 'change'}],
-                    // timestamp: [{type: 'date',required: true,message: 'timestamp is required',trigger: 'change'}],
-                    userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-                    userPassWord: [{ required: true, message: '请设定密码', trigger: 'blur' }],
-                    userTel: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-                    userRole: [{ required: true, message: '请选择用户角色', trigger: 'change' }]
-                },
-                downloadLoading: false
-            }
-        },
-        created() {
-            this.getList()
-        },
-        methods: {
-            getList() {
-                this.listLoading = true
-                seSensorList(this.listQuery).then(response => {
-                    this.list = response.callbackList
-                    this.total = response.total
-                    // this.total = response.data.total
-
-                    // Just to simulate the time of the request
-                    setTimeout(() => {
-                        this.listLoading = false
-                    }, 0.7 * 1000)
-                })
-            },
-            handleFilter() {
-                this.listQuery.page = 1
-                this.getList()
-            },
-            handleModifyStatus(row, status) {
-                this.$message({
-                    message: '操作成功',
-                    type: 'success'
-                })
-                row.status = status
-            },
-            sortChange(data) {
-                const {
-                    prop,
-                    order
-                } = data
-                if (prop === 'id') {
-                    this.sortByID(order)
-                }
-            },
-            sortByID(order) {
-                if (order === 'ascending') {
-                    this.listQuery.sort = '+id'
-                } else {
-                    this.listQuery.sort = '-id'
-                }
-                this.handleFilter()
-            },
-            resetTemp() {
-                this.temp = {
-                    sensorId:undefined,
-                    sensorDescription:'',
-                    sensorType:'',
-                    devNo:'',
-                    equipmentName:'',
-                    warningValue:'',
-                    allWarningId:'',
-                    nowTimeValue:'',
-                    absoluteValue:'',
-                    uploadTime:'',
-                    sysState:'',
-                    createdate:''
-
-                }
-            },
-            handleCreate() {
-                this.resetTemp()
-                this.dialogStatus = 'create'
-                this.dialogFormVisible = true
-                this.$nextTick(() => {
-                    this.$refs['dataForm'].clearValidate()
-                })
-            },
-            createData() {
-                this.$refs['dataForm'].validate((valid) => {
-                    if (valid) {
-                        // this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-                        // this.temp.author = 'vue-element-admin'
-                        createEquipment(
-                            this.temp.organization,
-                            this.temp.equipmentName,
-                            this.temp.equipmentType,
-                            this.temp.equipmentNO,
-                            this.temp.sysState
-                        ).then(() => {
-                            this.list.unshift(this.temp)
-                            this.dialogFormVisible = false
-                            this.$notify({
-                                title: 'Success',
-                                message: '创建成功',
-                                type: 'success',
-                                duration: 2000
-                            })
-                            this.getList()
-                        })
-                    }
-                })
-            },
-            handleUpdate(row) {
-                this.temp = Object.assign({}, row) // copy obj
-                this.temp.timestamp = new Date(this.temp.timestamp)
-                this.dialogStatus = 'update'
-                this.dialogFormVisible = true
-                this.$nextTick(() => {
-                    this.$refs['dataForm'].clearValidate()
-                })
-            },
-            updateData() {
-                this.$refs['dataForm'].validate((valid) => {
-                    if (valid) {
-                        const tempData = Object.assign({}, this.temp)
-                        tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-                        updateArticle(tempData).then(() => {
-                            const index = this.list.findIndex(v => v.id === this.temp.id)
-                            this.list.splice(index, 1, this.temp)
-                            this.dialogFormVisible = false
-                            this.$notify({
-                                title: 'Success',
-                                message: 'Update Successfully',
-                                type: 'success',
-                                duration: 2000
-                            })
-                        })
-                    }
-                })
-            },
-            handleDelete(row, index) {
-                this.temp = Object.assign({}, row) // copy obj
-
-                userEquipment(this.temp.equipmentId).then(() => {
-                    this.list.splice(index, 1)
-                    this.$notify({
-                        title: 'Success',
-                        message: 'Delete Successfully',
-                        type: 'success',
-                        duration: 2000
-                    })
-                })
-                this.getList()
-            },
-
-            handleDownload() {
-                this.downloadLoading = true
-                import('@/vendor/Export2Excel').then(excel => {
-                    const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-                    const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-                    const data = this.formatJson(filterVal)
-                    excel.export_json_to_excel({
-                        header: tHeader,
-                        data,
-                        filename: 'table-list'
-                    })
-                    this.downloadLoading = false
-                })
-            },
-            formatJson(filterVal) {
-                return this.list.map(v => filterVal.map(j => {
-                    if (j === 'timestamp') {
-                        return parseTime(v[j])
-                    } else {
-                        return v[j]
-                    }
-                }))
-            },
-            getSortClass: function(key) {
-                const sort = this.listQuery.sort
-                return sort === `+${key}` ? 'ascending' : 'descending'
-            }
-        }
+    typeFilter(userRole) {
+      return calendarTypeKeyValue[userRole]
     }
+  },
+
+  data() {
+    return {
+      tableKey: 0,
+      list: null,
+      total: 0,
+      listLoading: true,
+      // 查询条件参数
+      listQuery: {
+        page: 1,
+        limit: 10,
+        // importance: undefined,
+        equipmentName: undefined
+        // type: undefined
+      },
+      importanceOptions: [1, 2, 3],
+      calendarTypeOptions,
+      sortOptions: [{
+        label: 'ID Ascending',
+        key: '+id'
+      }, {
+        label: 'ID Descending',
+        key: '-id'
+      }],
+      statusOptions: ['published', 'draft', 'deleted'],
+      showReviewer: false,
+      temp: {
+        sensorId: undefined,
+        sensorDescription: '',
+        sensorType: '',
+        devNo: '',
+        equipmentName: '',
+        warningValue: '',
+        allWarningId: '',
+        nowTimeValue: '',
+        absoluteValue: '',
+        uploadTime: '',
+        sysState: '',
+        createdate: ''
+      },
+      dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: '编辑',
+        create: '创建'
+      },
+      dialogPvVisible: false,
+      pvData: [],
+      rules: {
+        // type: [{required: true,message: 'type is required',trigger: 'change'}],
+        // timestamp: [{type: 'date',required: true,message: 'timestamp is required',trigger: 'change'}],
+        userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        userPassWord: [{ required: true, message: '请设定密码', trigger: 'blur' }],
+        userTel: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
+        userRole: [{ required: true, message: '请选择用户角色', trigger: 'change' }]
+      },
+      downloadLoading: false
+    }
+  },
+  created() {
+    this.getList()
+  },
+  methods: {
+    getList() {
+      this.listLoading = true
+      seSensorList(this.listQuery).then(response => {
+        this.list = response.callbackList
+        this.total = response.total
+        // this.total = response.data.total
+
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 0.7 * 1000)
+      })
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: '操作成功',
+        type: 'success'
+      })
+      row.status = status
+    },
+    sortChange(data) {
+      const {
+        prop,
+        order
+      } = data
+      if (prop === 'id') {
+        this.sortByID(order)
+      }
+    },
+    sortByID(order) {
+      if (order === 'ascending') {
+        this.listQuery.sort = '+id'
+      } else {
+        this.listQuery.sort = '-id'
+      }
+      this.handleFilter()
+    },
+    resetTemp() {
+      this.temp = {
+        sensorId: undefined,
+        sensorDescription: '',
+        sensorType: '',
+        devNo: '',
+        equipmentName: '',
+        warningValue: '',
+        allWarningId: '',
+        nowTimeValue: '',
+        absoluteValue: '',
+        uploadTime: '',
+        sysState: '',
+        createdate: ''
+
+      }
+    },
+    handleCreate() {
+      this.resetTemp()
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          // this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          // this.temp.author = 'vue-element-admin'
+          createEquipment(
+            this.temp.organization,
+            this.temp.equipmentName,
+            this.temp.equipmentType,
+            this.temp.equipmentNO,
+            this.temp.sysState
+          ).then(() => {
+            this.list.unshift(this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: '创建成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.getList()
+          })
+        }
+      })
+    },
+    handleUpdate(row) {
+      this.temp = Object.assign({}, row) // copy obj
+      this.temp.timestamp = new Date(this.temp.timestamp)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          updateArticle(tempData).then(() => {
+            const index = this.list.findIndex(v => v.id === this.temp.id)
+            this.list.splice(index, 1, this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: 'Update Successfully',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
+    },
+    handleDelete(row, index) {
+      this.temp = Object.assign({}, row) // copy obj
+
+      userEquipment(this.temp.equipmentId).then(() => {
+        this.list.splice(index, 1)
+        this.$notify({
+          title: 'Success',
+          message: 'Delete Successfully',
+          type: 'success',
+          duration: 2000
+        })
+      })
+      this.getList()
+    },
+
+    handleDownload() {
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
+        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const data = this.formatJson(filterVal)
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: 'table-list'
+        })
+        this.downloadLoading = false
+      })
+    },
+    formatJson(filterVal) {
+      return this.list.map(v => filterVal.map(j => {
+        if (j === 'timestamp') {
+          return parseTime(v[j])
+        } else {
+          return v[j]
+        }
+      }))
+    },
+    getSortClass: function(key) {
+      const sort = this.listQuery.sort
+      return sort === `+${key}` ? 'ascending' : 'descending'
+    }
+  }
+}
 </script>

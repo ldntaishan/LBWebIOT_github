@@ -22,12 +22,12 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         创建
       </el-button>
-<!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
-<!--        导出-->
-<!--      </el-button>-->
-<!--      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">-->
-<!--        reviewer-->
-<!--      </el-checkbox>-->
+      <!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
+      <!--        导出-->
+      <!--      </el-button>-->
+      <!--      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">-->
+      <!--        reviewer-->
+      <!--      </el-checkbox>-->
     </div>
 
     <el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%;" @sort-change="sortChange">
@@ -102,7 +102,7 @@
           <el-button type="success" size="mini" @click="handleUpdate(row)">
             查看
           </el-button>
-          <el-button type="primary" style="margin-right: 10px" size="mini"  @click="handleUpdate(row)">
+          <el-button type="primary" style="margin-right: 10px" size="mini" @click="handleUpdate(row)">
             编辑
           </el-button>
           <!-- <el-button v-if="row.userState!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
@@ -111,8 +111,8 @@
           <!-- <el-button v-if="row.userState!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
             Draft
           </el-button> -->
-          <el-popconfirm title="确定删除吗？"  @onConfirm="handleDelete(row,$index)">
-            <el-button size="mini" type="danger"  slot="reference">删除</el-button>
+          <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(row,$index)">
+            <el-button slot="reference" size="mini" type="danger">删除</el-button>
           </el-popconfirm>
 
         </template>
@@ -203,7 +203,8 @@
 </template>
 
 <script>
-import { MessageBox, Message } from 'element-ui'
+// import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import {
   seAllUserList,
   createUser,

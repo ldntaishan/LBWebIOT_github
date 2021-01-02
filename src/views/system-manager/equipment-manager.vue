@@ -9,12 +9,12 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         创建
       </el-button>
-<!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
-<!--        导出-->
-<!--      </el-button>-->
-<!--      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">-->
-<!--        reviewer-->
-<!--      </el-checkbox>-->
+      <!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
+      <!--        导出-->
+      <!--      </el-button>-->
+      <!--      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">-->
+      <!--        reviewer-->
+      <!--      </el-checkbox>-->
     </div>
 
     <el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%;" @sort-change="sortChange">
@@ -33,7 +33,7 @@
 
       <el-table-column label="设备型号" min-width="120px">
         <template slot-scope="{row}">
-          <span >{{ row.equipmentType }}</span>
+          <span>{{ row.equipmentType }}</span>
         </template>
       </el-table-column>
 
@@ -54,14 +54,14 @@
           <el-button type="success" size="mini" @click="handleUpdate(row)">
             查看
           </el-button>
-          <el-button type="primary" style="margin-right: 10px"  size="mini" @click="handleUpdate(row)">
+          <el-button type="primary" style="margin-right: 10px" size="mini" @click="handleUpdate(row)">
             编辑
           </el-button>
           <!-- <el-button v-if="row.userState!='2'" size="mini" type="danger" @click="handleDelete(row,$index)">
             删除
           </el-button> -->
           <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(row,$index)">
-            <el-button size="mini" type="danger" slot="reference">删除</el-button>
+            <el-button slot="reference" size="mini" type="danger">删除</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -112,267 +112,267 @@
 </template>
 
 <script>
-    import {
-        seEquipmentList,
-        createEquipment,
-        update_eqmt,
-        delEquipment
-    } from '@/api/article'
-    import waves from '@/directive/waves' // waves directive
-    import {
-        parseTime
-    } from '@/utils'
-    import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import {
+  seEquipmentList,
+  createEquipment,
+  update_eqmt,
+  delEquipment
+} from '@/api/article'
+import waves from '@/directive/waves' // waves directive
+import {
+  parseTime
+} from '@/utils'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
-    const calendarTypeOptions = [{
-        key: '1',
-        display_name: '超级管理员'
+const calendarTypeOptions = [{
+  key: '1',
+  display_name: '超级管理员'
+},
+{
+  key: '2',
+  display_name: '管理员'
+}
+]
+
+// arr to obj, such as { 1 : "超级管理员", 2 : "管理员" }
+const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.display_name
+  return acc
+}, {})
+
+export default {
+  name: 'ComplexTable',
+  components: {
+    Pagination
+  },
+  directives: {
+    waves
+  },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
     },
-        {
-            key: '2',
-            display_name: '管理员'
-        }
-    ]
-
-    // arr to obj, such as { 1 : "超级管理员", 2 : "管理员" }
-    const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-        acc[cur.key] = cur.display_name
-        return acc
-    }, {})
-
-    export default {
-        name: 'ComplexTable',
-        components: {
-            Pagination
-        },
-        directives: {
-            waves
-        },
-        filters: {
-            statusFilter(status) {
-                const statusMap = {
-                    published: 'success',
-                    draft: 'info',
-                    deleted: 'danger'
-                }
-                return statusMap[status]
-            },
-            typeFilter(userRole) {
-                return calendarTypeKeyValue[userRole]
-            }
-        },
-
-        data() {
-            return {
-                tableKey: 0,
-                list: null,
-                total: 0,
-                listLoading: true,
-                // 查询条件参数
-                listQuery: {
-                    page: 1,
-                    limit: 10,
-                    // importance: undefined,
-                    equipmentName: undefined
-                    // type: undefined
-                },
-                importanceOptions: [1, 2, 3],
-                calendarTypeOptions,
-                sortOptions: [{
-                    label: 'ID Ascending',
-                    key: '+id'
-                }, {
-                    label: 'ID Descending',
-                    key: '-id'
-                }],
-                statusOptions: ['published', 'draft', 'deleted'],
-                showReviewer: false,
-                temp: {
-                    equipmentId:undefined,
-                    organization:'',
-                    equipmentName:'',
-                    equipmentType:'',
-                    equipmentNO:'',
-                    sysState:'1',
-                    createdate: ''
-
-                },
-                dialogFormVisible: false,
-                dialogStatus: '',
-                textMap: {
-                    update: '编辑',
-                    create: '创建'
-                },
-                dialogPvVisible: false,
-                pvData: [],
-                rules: {
-                    // type: [{required: true,message: 'type is required',trigger: 'change'}],
-                    // timestamp: [{type: 'date',required: true,message: 'timestamp is required',trigger: 'change'}],
-                    organization: [{ required: true, message: '请输入所属风场', trigger: 'blur' }],
-                    equipmentName: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
-                    equipmentType: [{ required: true, message: '请输入设备型号', trigger: 'blur' }],
-                    equipmentNO: [{ required: true, message: '请输入设备编号', trigger: 'blur' }]
-                },
-                downloadLoading: false
-            }
-        },
-        created() {
-            this.getList()
-        },
-        methods: {
-            getList() {
-                this.listLoading = true
-                seEquipmentList(this.listQuery).then(response => {
-                    this.list = response.callbackList
-                    this.total = response.total
-                    // this.total = response.data.total
-
-                    // Just to simulate the time of the request
-                    setTimeout(() => {
-                        this.listLoading = false
-                    }, 0.7 * 1000)
-                })
-            },
-            handleFilter() {
-                this.listQuery.page = 1
-                this.getList()
-            },
-            handleModifyStatus(row, status) {
-                this.$message({
-                    message: '操作成功',
-                    type: 'success'
-                })
-                row.status = status
-            },
-            sortChange(data) {
-                const {
-                    prop,
-                    order
-                } = data
-                if (prop === 'id') {
-                    this.sortByID(order)
-                }
-            },
-            sortByID(order) {
-                if (order === 'ascending') {
-                    this.listQuery.sort = '+id'
-                } else {
-                    this.listQuery.sort = '-id'
-                }
-                this.handleFilter()
-            },
-            resetTemp() {
-                this.temp = {
-                    equipmentId:undefined,
-                    organization:'',
-                    equipmentName:'',
-                    equipmentType:'',
-                    equipmentNO:'',
-                    sysState:'',
-                    createdate: ''
-
-                }
-            },
-            handleCreate() {
-                this.resetTemp()
-                this.dialogStatus = 'create'
-                this.dialogFormVisible = true
-                this.$nextTick(() => {
-                    this.$refs['dataForm'].clearValidate()
-                })
-            },
-            createData() {
-                this.$refs['dataForm'].validate((valid) => {
-                    if (valid) {
-                        // this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-                        // this.temp.author = 'vue-element-admin'
-                        createEquipment(
-                            this.temp.organization,
-                            this.temp.equipmentName,
-                            this.temp.equipmentType,
-                            this.temp.equipmentNO,
-                            this.temp.sysState
-                        ).then(() => {
-                            this.list.unshift(this.temp)
-                            this.dialogFormVisible = false
-                            this.$notify({
-                                title: 'Success',
-                                message: '创建成功',
-                                type: 'success',
-                                duration: 2000
-                            })
-                            this.getList()
-                        })
-                    }
-                })
-            },
-            handleUpdate(row) {
-                this.temp = Object.assign({}, row) // copy obj
-                this.dialogStatus = 'update'
-                this.dialogFormVisible = true
-                this.$nextTick(() => {
-                    this.$refs['dataForm'].clearValidate()
-                })
-            },
-            updateData() {
-                this.$refs['dataForm'].validate((valid) => {
-                    if (valid) {
-                        const tempData = Object.assign({}, this.temp)
-                        update_eqmt(tempData).then(() => {
-                            const index = this.list.findIndex(v => v.equipmentId === this.temp.equipmentId)
-                            this.list.splice(index, 1, this.temp)
-                            this.dialogFormVisible = false
-                            this.$notify({
-                                title: 'Success',
-                                message: 'Update Successfully',
-                                type: 'success',
-                                duration: 2000
-                            })
-                        })
-                    }
-                })
-            },
-            handleDelete(row, index) {
-                this.temp = Object.assign({}, row) // copy obj
-                delEquipment(this.temp.equipmentId).then(() => {
-                    this.list.splice(index, 1)
-                    this.$notify({
-                        title: 'Success',
-                        message: '该风塔已删除',
-                        type: 'success',
-                        duration: 2000
-                    })
-                })
-                this.getList()
-            },
-
-            handleDownload() {
-                this.downloadLoading = true
-                import('@/vendor/Export2Excel').then(excel => {
-                    const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-                    const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-                    const data = this.formatJson(filterVal)
-                    excel.export_json_to_excel({
-                        header: tHeader,
-                        data,
-                        filename: 'table-list'
-                    })
-                    this.downloadLoading = false
-                })
-            },
-            formatJson(filterVal) {
-                return this.list.map(v => filterVal.map(j => {
-                    if (j === 'timestamp') {
-                        return parseTime(v[j])
-                    } else {
-                        return v[j]
-                    }
-                }))
-            },
-            getSortClass: function(key) {
-                const sort = this.listQuery.sort
-                return sort === `+${key}` ? 'ascending' : 'descending'
-            }
-        }
+    typeFilter(userRole) {
+      return calendarTypeKeyValue[userRole]
     }
+  },
+
+  data() {
+    return {
+      tableKey: 0,
+      list: null,
+      total: 0,
+      listLoading: true,
+      // 查询条件参数
+      listQuery: {
+        page: 1,
+        limit: 10,
+        // importance: undefined,
+        equipmentName: undefined
+        // type: undefined
+      },
+      importanceOptions: [1, 2, 3],
+      calendarTypeOptions,
+      sortOptions: [{
+        label: 'ID Ascending',
+        key: '+id'
+      }, {
+        label: 'ID Descending',
+        key: '-id'
+      }],
+      statusOptions: ['published', 'draft', 'deleted'],
+      showReviewer: false,
+      temp: {
+        equipmentId: undefined,
+        organization: '',
+        equipmentName: '',
+        equipmentType: '',
+        equipmentNO: '',
+        sysState: '1',
+        createdate: ''
+
+      },
+      dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: '编辑',
+        create: '创建'
+      },
+      dialogPvVisible: false,
+      pvData: [],
+      rules: {
+        // type: [{required: true,message: 'type is required',trigger: 'change'}],
+        // timestamp: [{type: 'date',required: true,message: 'timestamp is required',trigger: 'change'}],
+        organization: [{ required: true, message: '请输入所属风场', trigger: 'blur' }],
+        equipmentName: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
+        equipmentType: [{ required: true, message: '请输入设备型号', trigger: 'blur' }],
+        equipmentNO: [{ required: true, message: '请输入设备编号', trigger: 'blur' }]
+      },
+      downloadLoading: false
+    }
+  },
+  created() {
+    this.getList()
+  },
+  methods: {
+    getList() {
+      this.listLoading = true
+      seEquipmentList(this.listQuery).then(response => {
+        this.list = response.callbackList
+        this.total = response.total
+        // this.total = response.data.total
+
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 0.7 * 1000)
+      })
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: '操作成功',
+        type: 'success'
+      })
+      row.status = status
+    },
+    sortChange(data) {
+      const {
+        prop,
+        order
+      } = data
+      if (prop === 'id') {
+        this.sortByID(order)
+      }
+    },
+    sortByID(order) {
+      if (order === 'ascending') {
+        this.listQuery.sort = '+id'
+      } else {
+        this.listQuery.sort = '-id'
+      }
+      this.handleFilter()
+    },
+    resetTemp() {
+      this.temp = {
+        equipmentId: undefined,
+        organization: '',
+        equipmentName: '',
+        equipmentType: '',
+        equipmentNO: '',
+        sysState: '',
+        createdate: ''
+
+      }
+    },
+    handleCreate() {
+      this.resetTemp()
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          // this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          // this.temp.author = 'vue-element-admin'
+          createEquipment(
+            this.temp.organization,
+            this.temp.equipmentName,
+            this.temp.equipmentType,
+            this.temp.equipmentNO,
+            this.temp.sysState
+          ).then(() => {
+            this.list.unshift(this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: '创建成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.getList()
+          })
+        }
+      })
+    },
+    handleUpdate(row) {
+      this.temp = Object.assign({}, row) // copy obj
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          update_eqmt(tempData).then(() => {
+            const index = this.list.findIndex(v => v.equipmentId === this.temp.equipmentId)
+            this.list.splice(index, 1, this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: 'Update Successfully',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
+    },
+    handleDelete(row, index) {
+      this.temp = Object.assign({}, row) // copy obj
+      delEquipment(this.temp.equipmentId).then(() => {
+        this.list.splice(index, 1)
+        this.$notify({
+          title: 'Success',
+          message: '该风塔已删除',
+          type: 'success',
+          duration: 2000
+        })
+      })
+      this.getList()
+    },
+
+    handleDownload() {
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
+        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const data = this.formatJson(filterVal)
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: 'table-list'
+        })
+        this.downloadLoading = false
+      })
+    },
+    formatJson(filterVal) {
+      return this.list.map(v => filterVal.map(j => {
+        if (j === 'timestamp') {
+          return parseTime(v[j])
+        } else {
+          return v[j]
+        }
+      }))
+    },
+    getSortClass: function(key) {
+      const sort = this.listQuery.sort
+      return sort === `+${key}` ? 'ascending' : 'descending'
+    }
+  }
+}
 </script>

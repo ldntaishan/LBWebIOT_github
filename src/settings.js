@@ -28,8 +28,7 @@ module.exports = {
   /**
    * 报警声音是否打开关闭
    */
-  alarmSound:true,
-
+  alarmSound: true,
 
   /**
    * @type {string | array} 'production' | ['production', 'development']

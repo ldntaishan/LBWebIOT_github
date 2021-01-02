@@ -75,18 +75,18 @@ export default {
       }
     },
     alarmSound: {
-        get() {
-          return this.$store.state.settings.alarmSound
-        },
-        set(val) {
-          this.$store.dispatch('settings/changeSetting', {
-            key: 'alarmSound',
-            value: val
-          })
-        }
+      get() {
+        return this.$store.state.settings.alarmSound
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'alarmSound',
+          value: val
+        })
       }
+    }
   },
-  
+
   methods: {
     themeChange(val) {
       this.$store.dispatch('settings/changeSetting', {

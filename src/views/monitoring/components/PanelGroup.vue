@@ -111,14 +111,14 @@ export default {
         this.indexSensorNumber = response
         // console.log(response.randomValue)
         // this.indexSensorNumber.allTotal=response.randomValue
-        if(response.alertTotal>0&&this.isAlarmSound()){
+        if (response.alertTotal > 0 && this.isAlarmSound()) {
           playAlarmSound()
         }
       })
     },
     isAlarmSound() {
       return this.$store.state.settings.alarmSound
-    },
+    }
   }
   // activated() {
   //   console.log("执行activated")

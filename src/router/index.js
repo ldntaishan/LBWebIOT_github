@@ -7,13 +7,13 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
 import systemManagerRouter from './modules/system-manager'
 import systemOperationRouter from './modules/system-operation'
 import systemSetRouter from './modules/system-set'
 
-import nestedRouter from './modules/nested'
+// import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1

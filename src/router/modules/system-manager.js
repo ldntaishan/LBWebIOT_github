@@ -30,7 +30,7 @@ const systemManagerRouter = {
       component: () => import('@/views/system-manager/sensor-manager'),
       name: 'DragTable',
       meta: { title: '---螺栓管理' }
-    },
+    }
     // {
     //   path: 'inline-edit-table',
     //   component: () => import('@/views/table/inline-edit-table'),

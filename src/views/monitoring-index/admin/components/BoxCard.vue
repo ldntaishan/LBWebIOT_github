@@ -1,27 +1,27 @@
 <template>
   <el-card class="box-card-component" style="margin-left:8px;">
     <div slot="header" class="box-card-header">
-<!--      <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png">-->
+      <!--      <img src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png">-->
       <img src="@/assets/gifacc/fengche01.gif">
     </div>
     <div style="position:relative;">
       <mallki class-name="mallki-text" text="" />
       <pan-thumb :image="avatar" class="panThumb" align="left" />
 
-      <div align="justify" style="padding-top:40px;" class="progress-item" >
+      <div align="justify" style="padding-top:40px;" class="progress-item">
         <span>报警数</span>
         <el-tag type="danger" style="margin-left:10px;margin-right: 10px ">35</el-tag>
 
         <span>掉线数</span>
         <el-tag type="info" style="margin-left:10px ;margin-right: 10px">13590</el-tag>
       </div>
-      <div align="justify" style="padding-top:10px;" class="progress-item" >
+      <div align="justify" style="padding-top:10px;" class="progress-item">
         <span>初始化</span>
         <el-tag type="warning" style="margin-left:10px;margin-right: 10px ">135</el-tag>
 
         <span>正常数</span>
         <el-tag type="success" style="margin-left:10px ;margin-right: 10px">5</el-tag>
-<!--        <el-progress :percentage="100" status="success" text-inside="true" show-text="false"/>-->
+        <!--        <el-progress :percentage="100" status="success" text-inside="true" show-text="false"/>-->
       </div>
     </div>
   </el-card>

@@ -2,8 +2,7 @@ import request from '@/utils/request'
 
 // const serverBaseURL = 'http://localhost:8080/LBServerIOT_war_exploded'// 我的笔记本环境
 // const serverBaseURL = "http://localhost:8080/LBServerIOT_github_war_exploded/";//我的台式机环境
-const serverBaseURL = "http://39.106.55.120:8080";//线上服务器环境
-
+const serverBaseURL = 'http://39.106.55.120:8080'// 线上服务器环境
 
 export function fetchList(query) {
   return request({
@@ -20,8 +19,6 @@ export function seAllUserList(query) {
     params: { query }
   })
 }
-
-
 
 export function createUser(userName, userNickName, userEmail, userTel, userRole, userPassWord) {
   return request({
@@ -54,7 +51,6 @@ export function fetchArticle(id) {
   })
 }
 
-
 export function createArticle(data) {
   return request({
     url: '/vue-element-admin/article/create',
@@ -70,25 +66,25 @@ export function updateArticle(data) {
     data
   })
 }
-  //--设备管理 片段-----------
+// --设备管理 片段-----------
 
-//设备查询
+// 设备查询
 export function seEquipmentList(query) {
-    return request({
-      url: serverBaseURL + '/eqmt/f_eqmtlist',
-      method: 'get',
-      params: { query }
-    })
+  return request({
+    url: serverBaseURL + '/eqmt/f_eqmtlist',
+    method: 'get',
+    params: { query }
+  })
 }
-//创建设备
+// 创建设备
 export function createEquipment(organization, equipmentName, equipmentType, equipmentNO, sysState) {
-    return request({
-      url: serverBaseURL + '/eqmt/crt_eqmt',
-      method: 'get',
-      params: { organization, equipmentName, equipmentType, equipmentNO, sysState }
-    })
+  return request({
+    url: serverBaseURL + '/eqmt/crt_eqmt',
+    method: 'get',
+    params: { organization, equipmentName, equipmentType, equipmentNO, sysState }
+  })
 }
-//删除设备
+// 删除设备
 export function delEquipment(equipmentId) {
   return request({
     url: serverBaseURL + '/eqmt/del_eqmt',
@@ -96,7 +92,7 @@ export function delEquipment(equipmentId) {
     params: { equipmentId }
   })
 }
-//--传感器管理 片段-----------
+// --传感器管理 片段-----------
 export function seSensorList(query) {
   return request({
     url: serverBaseURL + '/ss/f_sslist',
@@ -112,45 +108,45 @@ export function list_monitoring(query) {
   })
 }
 
-export function update_useState(sensorId,useState) {
+export function update_useState(sensorId, useState) {
   return request({
     url: serverBaseURL + '/ss/update_useState',
     method: 'get',
-    params: { sensorId,useState}
+    params: { sensorId, useState }
   })
 }
 
-//创建传感器
-export function createSensor(equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState) {
+// 创建传感器
+export function createSensor(equipmentId, sensorDescription, sensorType, devNo, warningValue, sysState) {
   return request({
     url: serverBaseURL + '/ss/crt_ss',
     method: 'get',
-    params: { equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState }
+    params: { equipmentId, sensorDescription, sensorType, devNo, warningValue, sysState }
   })
 }
-//编辑传感器
-export function updateSensor(equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState,sensorId) {
+// 编辑传感器
+export function updateSensor(equipmentId, sensorDescription, sensorType, devNo, warningValue, sysState, sensorId) {
   return request({
     url: serverBaseURL + '/ss/update_ss',
     method: 'get',
-    params: {equipmentId,sensorDescription,sensorType,devNo,warningValue,sysState,sensorId}
+    params: { equipmentId, sensorDescription, sensorType, devNo, warningValue, sysState, sensorId }
   })
 }
-//查询全部风塔
+// 查询全部风塔
 export function f_eqmtlistall() {
   return request({
     url: serverBaseURL + '/eqmt/f_eqmtlistall',
     method: 'get'
   })
 }
-//在线监测页查询风塔概览
+// 在线监测页查询风塔概览
 export function f_eqmtlistallcount() {
   return request({
     url: serverBaseURL + '/eqmt/f_eqmtlistallcount',
     method: 'get'
   })
 }
-//编辑风塔
+// 编辑风塔
 export function update_eqmt(eqmt) {
   return request({
     url: serverBaseURL + '/eqmt/update_eqmt',
@@ -161,7 +157,7 @@ export function update_eqmt(eqmt) {
     //           'equipmentNO':eqmt.equipmentNO,
     //           'sysState':eqmt.sysState,
     //           'equipmentId':eqmt.equipmentId}
-    params:eqmt
+    params: eqmt
   })
 }
 export function index_sensor_number() {
@@ -170,7 +166,7 @@ export function index_sensor_number() {
     method: 'get'
   })
 }
-//传感器重置
+// 传感器重置
 export function sensor_reset(sensorId) {
   return request({
     url: serverBaseURL + '/ss/sensor_reset',
@@ -179,4 +175,4 @@ export function sensor_reset(sensorId) {
   })
 }
 
-  //-------------------------
+// -------------------------

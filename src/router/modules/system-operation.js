@@ -24,7 +24,7 @@ const systemOperationRouter = {
       component: () => import('@/views/system-operation/sensor-list'),
       name: 'sensor-list',
       meta: { title: '---点位详情' }
-    },
+    }
     // {
     //   path: 'inline-edit-table',
     //   component: () => import('@/views/table/inline-edit-table'),

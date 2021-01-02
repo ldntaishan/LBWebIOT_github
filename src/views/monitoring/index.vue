@@ -45,7 +45,6 @@ export default {
     return {
       lineChartData: lineChartData.newVisitis
     }
-
   },
   methods: {
     handleSetLineChartData(type) {
